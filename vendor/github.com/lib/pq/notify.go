@@ -4,6 +4,11 @@ package pq
 // This module contains support for Postgres LISTEN/NOTIFY.
 
 import (
+<<<<<<< HEAD
+=======
+	"context"
+	"database/sql/driver"
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	"errors"
 	"fmt"
 	"sync"
@@ -29,6 +34,64 @@ func recvNotification(r *readBuf) *Notification {
 	return &Notification{bePid, channel, extra}
 }
 
+<<<<<<< HEAD
+=======
+// SetNotificationHandler sets the given notification handler on the given
+// connection. A runtime panic occurs if c is not a pq connection. A nil handler
+// may be used to unset it.
+//
+// Note: Notification handlers are executed synchronously by pq meaning commands
+// won't continue to be processed until the handler returns.
+func SetNotificationHandler(c driver.Conn, handler func(*Notification)) {
+	c.(*conn).notificationHandler = handler
+}
+
+// NotificationHandlerConnector wraps a regular connector and sets a notification handler
+// on it.
+type NotificationHandlerConnector struct {
+	driver.Connector
+	notificationHandler func(*Notification)
+}
+
+// Connect calls the underlying connector's connect method and then sets the
+// notification handler.
+func (n *NotificationHandlerConnector) Connect(ctx context.Context) (driver.Conn, error) {
+	c, err := n.Connector.Connect(ctx)
+	if err == nil {
+		SetNotificationHandler(c, n.notificationHandler)
+	}
+	return c, err
+}
+
+// ConnectorNotificationHandler returns the currently set notification handler, if any. If
+// the given connector is not a result of ConnectorWithNotificationHandler, nil is
+// returned.
+func ConnectorNotificationHandler(c driver.Connector) func(*Notification) {
+	if c, ok := c.(*NotificationHandlerConnector); ok {
+		return c.notificationHandler
+	}
+	return nil
+}
+
+// ConnectorWithNotificationHandler creates or sets the given handler for the given
+// connector. If the given connector is a result of calling this function
+// previously, it is simply set on the given connector and returned. Otherwise,
+// this returns a new connector wrapping the given one and setting the notification
+// handler. A nil notification handler may be used to unset it.
+//
+// The returned connector is intended to be used with database/sql.OpenDB.
+//
+// Note: Notification handlers are executed synchronously by pq meaning commands
+// won't continue to be processed until the handler returns.
+func ConnectorWithNotificationHandler(c driver.Connector, handler func(*Notification)) *NotificationHandlerConnector {
+	if c, ok := c.(*NotificationHandlerConnector); ok {
+		c.notificationHandler = handler
+		return c
+	}
+	return &NotificationHandlerConnector{Connector: c, notificationHandler: handler}
+}
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 const (
 	connStateIdle int32 = iota
 	connStateExpectResponse
@@ -174,8 +237,17 @@ func (l *ListenerConn) listenerConnLoop() (err error) {
 			}
 			l.replyChan <- message{t, nil}
 
+<<<<<<< HEAD
 		case 'N', 'S':
 			// ignore
+=======
+		case 'S':
+			// ignore
+		case 'N':
+			if n := l.cn.noticeHandler; n != nil {
+				n(parseError(r))
+			}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		default:
 			return fmt.Errorf("unexpected message %q from server in listenerConnLoop", t)
 		}

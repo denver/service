@@ -27,8 +27,18 @@ func New() UUID {
 //  equivalent to the odds of creating a few tens of trillions of UUIDs in a
 //  year and having one duplicate.
 func NewRandom() (UUID, error) {
+<<<<<<< HEAD
 	var uuid UUID
 	_, err := io.ReadFull(rander, uuid[:])
+=======
+	return NewRandomFromReader(rander)
+}
+
+// NewRandomFromReader returns a UUID based on bytes read from a given io.Reader.
+func NewRandomFromReader(r io.Reader) (UUID, error) {
+	var uuid UUID
+	_, err := io.ReadFull(r, uuid[:])
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	if err != nil {
 		return Nil, err
 	}

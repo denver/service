@@ -13,6 +13,7 @@ var (
 	errParse          = "parsing error [col %d]"
 )
 
+<<<<<<< HEAD
 
 const start int = 1
 const first_final int = 44
@@ -20,6 +21,13 @@ const first_final int = 44
 const en_fail int = 46
 const en_main int = 1
 
+=======
+const start int = 1
+const firstFinal int = 44
+
+const enFail int = 46
+const enMain int = 1
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 // Machine is the interface representing the FSM
 type Machine interface {
@@ -68,6 +76,7 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		m.cs = start
 	}
 
+<<<<<<< HEAD
 
 	{
 		if (m.p) == (m.pe) {
@@ -171,6 +180,110 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto st_out
 	st_case_1:
+=======
+	{
+		if (m.p) == (m.pe) {
+			goto _testEof
+		}
+		switch m.cs {
+		case 1:
+			goto stCase1
+		case 0:
+			goto stCase0
+		case 2:
+			goto stCase2
+		case 3:
+			goto stCase3
+		case 4:
+			goto stCase4
+		case 5:
+			goto stCase5
+		case 6:
+			goto stCase6
+		case 7:
+			goto stCase7
+		case 8:
+			goto stCase8
+		case 9:
+			goto stCase9
+		case 10:
+			goto stCase10
+		case 11:
+			goto stCase11
+		case 12:
+			goto stCase12
+		case 13:
+			goto stCase13
+		case 14:
+			goto stCase14
+		case 15:
+			goto stCase15
+		case 16:
+			goto stCase16
+		case 17:
+			goto stCase17
+		case 18:
+			goto stCase18
+		case 19:
+			goto stCase19
+		case 20:
+			goto stCase20
+		case 21:
+			goto stCase21
+		case 22:
+			goto stCase22
+		case 23:
+			goto stCase23
+		case 24:
+			goto stCase24
+		case 25:
+			goto stCase25
+		case 26:
+			goto stCase26
+		case 27:
+			goto stCase27
+		case 28:
+			goto stCase28
+		case 29:
+			goto stCase29
+		case 30:
+			goto stCase30
+		case 31:
+			goto stCase31
+		case 32:
+			goto stCase32
+		case 33:
+			goto stCase33
+		case 34:
+			goto stCase34
+		case 35:
+			goto stCase35
+		case 36:
+			goto stCase36
+		case 37:
+			goto stCase37
+		case 38:
+			goto stCase38
+		case 44:
+			goto stCase44
+		case 39:
+			goto stCase39
+		case 40:
+			goto stCase40
+		case 45:
+			goto stCase45
+		case 41:
+			goto stCase41
+		case 42:
+			goto stCase42
+		case 43:
+			goto stCase43
+		case 46:
+			goto stCase46
+		}
+		goto stOut
+	stCase1:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 85:
 			goto tr1
@@ -179,6 +292,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto tr0
 	tr0:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.err = fmt.Errorf(errParse, m.p)
 		(m.p)--
 
@@ -188,6 +305,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 
 		goto st0
 	tr3:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.err = fmt.Errorf(errPrefix, m.p)
 		(m.p)--
 
@@ -204,6 +325,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 
 		goto st0
 	tr6:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.err = fmt.Errorf(errIdentifier, m.p)
 		(m.p)--
 
@@ -220,6 +345,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 
 		goto st0
 	tr41:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.err = fmt.Errorf(errSpecificString, m.p)
 		(m.p)--
 
@@ -236,6 +365,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 
 		goto st0
 	tr44:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.err = fmt.Errorf(errHex, m.p)
 		(m.p)--
 
@@ -259,6 +392,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 
 		goto st0
 	tr50:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.err = fmt.Errorf(errPrefix, m.p)
 		(m.p)--
 
@@ -282,6 +419,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 
 		goto st0
 	tr52:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.err = fmt.Errorf(errNoUrnWithinID, m.p)
 		(m.p)--
 
@@ -304,19 +445,33 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 
 		goto st0
+<<<<<<< HEAD
 	st_case_0:
+=======
+	stCase0:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	st0:
 		m.cs = 0
 		goto _out
 	tr1:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.pb = m.p
 
 		goto st2
 	st2:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof2
 		}
 	st_case_2:
+=======
+			goto _testEof2
+		}
+	stCase2:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 82:
 			goto st3
@@ -326,9 +481,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr0
 	st3:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof3
 		}
 	st_case_3:
+=======
+			goto _testEof3
+		}
+	stCase3:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 78:
 			goto st4
@@ -338,22 +499,38 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr3
 	st4:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof4
 		}
 	st_case_4:
+=======
+			goto _testEof4
+		}
+	stCase4:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		if (m.data)[(m.p)] == 58 {
 			goto tr5
 		}
 		goto tr0
 	tr5:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		output.prefix = string(m.text())
 
 		goto st5
 	st5:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof5
 		}
 	st_case_5:
+=======
+			goto _testEof5
+		}
+	stCase5:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 85:
 			goto tr8
@@ -374,14 +551,24 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto tr6
 	tr7:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.pb = m.p
 
 		goto st6
 	st6:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof6
 		}
 	st_case_6:
+=======
+			goto _testEof6
+		}
+	stCase6:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st7
@@ -403,9 +590,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st7:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof7
 		}
 	st_case_7:
+=======
+			goto _testEof7
+		}
+	stCase7:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st8
@@ -427,9 +620,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st8:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof8
 		}
 	st_case_8:
+=======
+			goto _testEof8
+		}
+	stCase8:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st9
@@ -451,9 +650,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st9:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof9
 		}
 	st_case_9:
+=======
+			goto _testEof9
+		}
+	stCase9:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st10
@@ -475,9 +680,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st10:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof10
 		}
 	st_case_10:
+=======
+			goto _testEof10
+		}
+	stCase10:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st11
@@ -499,9 +710,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st11:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof11
 		}
 	st_case_11:
+=======
+			goto _testEof11
+		}
+	stCase11:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st12
@@ -523,9 +740,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st12:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof12
 		}
 	st_case_12:
+=======
+			goto _testEof12
+		}
+	stCase12:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st13
@@ -547,9 +770,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st13:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof13
 		}
 	st_case_13:
+=======
+			goto _testEof13
+		}
+	stCase13:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st14
@@ -571,9 +800,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st14:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof14
 		}
 	st_case_14:
+=======
+			goto _testEof14
+		}
+	stCase14:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st15
@@ -595,9 +830,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st15:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof15
 		}
 	st_case_15:
+=======
+			goto _testEof15
+		}
+	stCase15:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st16
@@ -619,9 +860,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st16:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof16
 		}
 	st_case_16:
+=======
+			goto _testEof16
+		}
+	stCase16:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st17
@@ -643,9 +890,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st17:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof17
 		}
 	st_case_17:
+=======
+			goto _testEof17
+		}
+	stCase17:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st18
@@ -667,9 +920,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st18:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof18
 		}
 	st_case_18:
+=======
+			goto _testEof18
+		}
+	stCase18:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st19
@@ -691,9 +950,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st19:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof19
 		}
 	st_case_19:
+=======
+			goto _testEof19
+		}
+	stCase19:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st20
@@ -715,9 +980,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st20:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof20
 		}
 	st_case_20:
+=======
+			goto _testEof20
+		}
+	stCase20:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st21
@@ -739,9 +1010,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st21:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof21
 		}
 	st_case_21:
+=======
+			goto _testEof21
+		}
+	stCase21:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st22
@@ -763,9 +1040,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st22:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof22
 		}
 	st_case_22:
+=======
+			goto _testEof22
+		}
+	stCase22:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st23
@@ -787,9 +1070,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st23:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof23
 		}
 	st_case_23:
+=======
+			goto _testEof23
+		}
+	stCase23:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st24
@@ -811,9 +1100,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st24:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof24
 		}
 	st_case_24:
+=======
+			goto _testEof24
+		}
+	stCase24:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st25
@@ -835,9 +1130,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st25:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof25
 		}
 	st_case_25:
+=======
+			goto _testEof25
+		}
+	stCase25:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st26
@@ -859,9 +1160,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st26:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof26
 		}
 	st_case_26:
+=======
+			goto _testEof26
+		}
+	stCase26:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st27
@@ -883,9 +1190,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st27:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof27
 		}
 	st_case_27:
+=======
+			goto _testEof27
+		}
+	stCase27:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st28
@@ -907,9 +1220,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st28:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof28
 		}
 	st_case_28:
+=======
+			goto _testEof28
+		}
+	stCase28:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st29
@@ -931,9 +1250,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st29:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof29
 		}
 	st_case_29:
+=======
+			goto _testEof29
+		}
+	stCase29:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st30
@@ -955,9 +1280,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st30:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof30
 		}
 	st_case_30:
+=======
+			goto _testEof30
+		}
+	stCase30:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st31
@@ -979,9 +1310,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st31:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof31
 		}
 	st_case_31:
+=======
+			goto _testEof31
+		}
+	stCase31:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st32
@@ -1003,9 +1340,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st32:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof32
 		}
 	st_case_32:
+=======
+			goto _testEof32
+		}
+	stCase32:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st33
@@ -1027,9 +1370,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st33:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof33
 		}
 	st_case_33:
+=======
+			goto _testEof33
+		}
+	stCase33:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st34
@@ -1051,9 +1400,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st34:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof34
 		}
 	st_case_34:
+=======
+			goto _testEof34
+		}
+	stCase34:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st35
@@ -1075,9 +1430,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st35:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof35
 		}
 	st_case_35:
+=======
+			goto _testEof35
+		}
+	stCase35:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st36
@@ -1099,9 +1460,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st36:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof36
 		}
 	st_case_36:
+=======
+			goto _testEof36
+		}
+	stCase36:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st37
@@ -1123,22 +1490,38 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st37:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof37
 		}
 	st_case_37:
+=======
+			goto _testEof37
+		}
+	stCase37:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		if (m.data)[(m.p)] == 58 {
 			goto tr10
 		}
 		goto tr6
 	tr10:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		output.ID = string(m.text())
 
 		goto st38
 	st38:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof38
 		}
 	st_case_38:
+=======
+			goto _testEof38
+		}
+	stCase38:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 33:
 			goto tr42
@@ -1170,14 +1553,24 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto tr41
 	tr42:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.pb = m.p
 
 		goto st44
 	st44:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof44
 		}
 	st_case_44:
+=======
+			goto _testEof44
+		}
+	stCase44:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 33:
 			goto st44
@@ -1209,14 +1602,24 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto tr41
 	tr43:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.pb = m.p
 
 		goto st39
 	st39:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof39
 		}
 	st_case_39:
+=======
+			goto _testEof39
+		}
+	stCase39:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch {
 		case (m.data)[(m.p)] < 65:
 			if 48 <= (m.data)[(m.p)] && (m.data)[(m.p)] <= 57 {
@@ -1231,14 +1634,24 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto tr44
 	tr46:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.tolower = append(m.tolower, m.p-m.pb)
 
 		goto st40
 	st40:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof40
 		}
 	st_case_40:
+=======
+			goto _testEof40
+		}
+	stCase40:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch {
 		case (m.data)[(m.p)] < 65:
 			if 48 <= (m.data)[(m.p)] && (m.data)[(m.p)] <= 57 {
@@ -1253,14 +1666,24 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto tr44
 	tr48:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.tolower = append(m.tolower, m.p-m.pb)
 
 		goto st45
 	st45:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof45
 		}
 	st_case_45:
+=======
+			goto _testEof45
+		}
+	stCase45:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 33:
 			goto st44
@@ -1292,14 +1715,24 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 		goto tr44
 	tr8:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		m.pb = m.p
 
 		goto st41
 	st41:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof41
 		}
 	st_case_41:
+=======
+			goto _testEof41
+		}
+	stCase41:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st7
@@ -1325,9 +1758,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr6
 	st42:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof42
 		}
 	st_case_42:
+=======
+			goto _testEof42
+		}
+	stCase42:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 45:
 			goto st8
@@ -1353,9 +1792,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr50
 	st43:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof43
 		}
 	st_case_43:
+=======
+			goto _testEof43
+		}
+	stCase43:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		if (m.data)[(m.p)] == 45 {
 			goto st9
 		}
@@ -1374,9 +1819,15 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto tr52
 	st46:
 		if (m.p)++; (m.p) == (m.pe) {
+<<<<<<< HEAD
 			goto _test_eof46
 		}
 	st_case_46:
+=======
+			goto _testEof46
+		}
+	stCase46:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		switch (m.data)[(m.p)] {
 		case 10:
 			goto st0
@@ -1384,6 +1835,7 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 			goto st0
 		}
 		goto st46
+<<<<<<< HEAD
 	st_out:
 	_test_eof2:
 		m.cs = 2
@@ -1522,11 +1974,155 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		goto _test_eof
 
 	_test_eof:
+=======
+	stOut:
+	_testEof2:
+		m.cs = 2
+		goto _testEof
+	_testEof3:
+		m.cs = 3
+		goto _testEof
+	_testEof4:
+		m.cs = 4
+		goto _testEof
+	_testEof5:
+		m.cs = 5
+		goto _testEof
+	_testEof6:
+		m.cs = 6
+		goto _testEof
+	_testEof7:
+		m.cs = 7
+		goto _testEof
+	_testEof8:
+		m.cs = 8
+		goto _testEof
+	_testEof9:
+		m.cs = 9
+		goto _testEof
+	_testEof10:
+		m.cs = 10
+		goto _testEof
+	_testEof11:
+		m.cs = 11
+		goto _testEof
+	_testEof12:
+		m.cs = 12
+		goto _testEof
+	_testEof13:
+		m.cs = 13
+		goto _testEof
+	_testEof14:
+		m.cs = 14
+		goto _testEof
+	_testEof15:
+		m.cs = 15
+		goto _testEof
+	_testEof16:
+		m.cs = 16
+		goto _testEof
+	_testEof17:
+		m.cs = 17
+		goto _testEof
+	_testEof18:
+		m.cs = 18
+		goto _testEof
+	_testEof19:
+		m.cs = 19
+		goto _testEof
+	_testEof20:
+		m.cs = 20
+		goto _testEof
+	_testEof21:
+		m.cs = 21
+		goto _testEof
+	_testEof22:
+		m.cs = 22
+		goto _testEof
+	_testEof23:
+		m.cs = 23
+		goto _testEof
+	_testEof24:
+		m.cs = 24
+		goto _testEof
+	_testEof25:
+		m.cs = 25
+		goto _testEof
+	_testEof26:
+		m.cs = 26
+		goto _testEof
+	_testEof27:
+		m.cs = 27
+		goto _testEof
+	_testEof28:
+		m.cs = 28
+		goto _testEof
+	_testEof29:
+		m.cs = 29
+		goto _testEof
+	_testEof30:
+		m.cs = 30
+		goto _testEof
+	_testEof31:
+		m.cs = 31
+		goto _testEof
+	_testEof32:
+		m.cs = 32
+		goto _testEof
+	_testEof33:
+		m.cs = 33
+		goto _testEof
+	_testEof34:
+		m.cs = 34
+		goto _testEof
+	_testEof35:
+		m.cs = 35
+		goto _testEof
+	_testEof36:
+		m.cs = 36
+		goto _testEof
+	_testEof37:
+		m.cs = 37
+		goto _testEof
+	_testEof38:
+		m.cs = 38
+		goto _testEof
+	_testEof44:
+		m.cs = 44
+		goto _testEof
+	_testEof39:
+		m.cs = 39
+		goto _testEof
+	_testEof40:
+		m.cs = 40
+		goto _testEof
+	_testEof45:
+		m.cs = 45
+		goto _testEof
+	_testEof41:
+		m.cs = 41
+		goto _testEof
+	_testEof42:
+		m.cs = 42
+		goto _testEof
+	_testEof43:
+		m.cs = 43
+		goto _testEof
+	_testEof46:
+		m.cs = 46
+		goto _testEof
+
+	_testEof:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		{
 		}
 		if (m.p) == (m.eof) {
 			switch m.cs {
 			case 44, 45:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				raw := m.text()
 				output.SS = string(raw)
 				// Iterate upper letters lowering them
@@ -1536,6 +2132,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 				output.norm = string(raw)
 
 			case 1, 2, 4:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				m.err = fmt.Errorf(errParse, m.p)
 				(m.p)--
 
@@ -1544,6 +2144,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 				}
 
 			case 3:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				m.err = fmt.Errorf(errPrefix, m.p)
 				(m.p)--
 
@@ -1559,6 +2163,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 				}
 
 			case 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 41:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				m.err = fmt.Errorf(errIdentifier, m.p)
 				(m.p)--
 
@@ -1574,6 +2182,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 				}
 
 			case 38:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				m.err = fmt.Errorf(errSpecificString, m.p)
 				(m.p)--
 
@@ -1589,6 +2201,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 				}
 
 			case 42:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				m.err = fmt.Errorf(errPrefix, m.p)
 				(m.p)--
 
@@ -1611,6 +2227,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 				}
 
 			case 43:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				m.err = fmt.Errorf(errNoUrnWithinID, m.p)
 				(m.p)--
 
@@ -1633,6 +2253,10 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 				}
 
 			case 39, 40:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				m.err = fmt.Errorf(errHex, m.p)
 				(m.p)--
 
@@ -1662,7 +2286,11 @@ func (m *machine) Parse(input []byte) (*URN, error) {
 		}
 	}
 
+<<<<<<< HEAD
 	if m.cs < first_final || m.cs == en_fail {
+=======
+	if m.cs < firstFinal || m.cs == enFail {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		return nil, m.err
 	}
 

@@ -21,4 +21,9 @@ _testmain.go
 
 *.exe
 *.test
+<<<<<<< HEAD
 *.prof
+=======
+*.prof
+*.coverprofile
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

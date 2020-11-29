@@ -79,7 +79,11 @@ func (cn *conn) Ping(ctx context.Context) error {
 	if finish := cn.watchCancel(ctx); finish != nil {
 		defer finish()
 	}
+<<<<<<< HEAD
 	rows, err := cn.simpleQuery("SELECT 'lib/pq ping test';")
+=======
+	rows, err := cn.simpleQuery(";")
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	if err != nil {
 		return driver.ErrBadConn // https://golang.org/pkg/database/sql/driver/#Pinger
 	}

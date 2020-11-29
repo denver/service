@@ -10,6 +10,7 @@ import (
 	"unicode"
 )
 
+<<<<<<< HEAD
 // field maintains information about a field in the configuration struct.
 type field struct {
 	name    string
@@ -35,6 +36,34 @@ type fieldOptions struct {
 
 // extractFields uses reflection to examine the struct and generate the keys.
 func extractFields(prefix []string, target interface{}) ([]field, error) {
+=======
+// Field maintains information about a field in the configuration struct.
+type Field struct {
+	Name    string
+	FlagKey []string
+	EnvKey  []string
+	Field   reflect.Value
+	Options FieldOptions
+
+	// Important for flag parsing or any other source where
+	// booleans might be treated specially.
+	BoolField bool
+}
+
+// FieldOptions maintain flag options for a given field.
+type FieldOptions struct {
+	Help          string
+	DefaultVal    string
+	EnvName       string
+	FlagName      string
+	ShortFlagChar rune
+	Noprint       bool
+	Required      bool
+}
+
+// extractFields uses reflection to examine the struct and generate the keys.
+func extractFields(prefix []string, target interface{}) ([]Field, error) {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	if prefix == nil {
 		prefix = []string{}
 	}
@@ -49,7 +78,11 @@ func extractFields(prefix []string, target interface{}) ([]field, error) {
 	}
 	targetType := s.Type()
 
+<<<<<<< HEAD
 	var fields []field
+=======
+	var fields []Field
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 	for i := 0; i < s.NumField(); i++ {
 		f := s.Field(i)
@@ -113,6 +146,7 @@ func extractFields(prefix []string, target interface{}) ([]field, error) {
 			}
 		default:
 			envKey := fieldKey
+<<<<<<< HEAD
 			if fieldOpts.envName != "" {
 				envKey = strings.Split(fieldOpts.envName, "_")
 			}
@@ -129,6 +163,24 @@ func extractFields(prefix []string, target interface{}) ([]field, error) {
 				field:     f,
 				options:   fieldOpts,
 				boolField: f.Kind() == reflect.Bool,
+=======
+			if fieldOpts.EnvName != "" {
+				envKey = strings.Split(fieldOpts.EnvName, "_")
+			}
+
+			flagKey := fieldKey
+			if fieldOpts.FlagName != "" {
+				flagKey = strings.Split(fieldOpts.FlagName, "-")
+			}
+
+			fld := Field{
+				Name:      fieldName,
+				EnvKey:    envKey,
+				FlagKey:   flagKey,
+				Field:     f,
+				Options:   fieldOpts,
+				BoolField: f.Kind() == reflect.Bool,
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			}
 			fields = append(fields, fld)
 		}
@@ -137,8 +189,13 @@ func extractFields(prefix []string, target interface{}) ([]field, error) {
 	return fields, nil
 }
 
+<<<<<<< HEAD
 func parseTag(tagStr string) (fieldOptions, error) {
 	var f fieldOptions
+=======
+func parseTag(tagStr string) (FieldOptions, error) {
+	var f FieldOptions
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	if tagStr == "" {
 		return f, nil
 	}
@@ -152,9 +209,15 @@ func parseTag(tagStr string) (fieldOptions, error) {
 		case 1:
 			switch tagProp {
 			case "noprint":
+<<<<<<< HEAD
 				f.noprint = true
 			case "required":
 				f.required = true
+=======
+				f.Noprint = true
+			case "required":
+				f.Required = true
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			}
 		case 2:
 			tagPropVal := strings.TrimSpace(vals[1])
@@ -166,6 +229,7 @@ func parseTag(tagStr string) (fieldOptions, error) {
 				if len([]rune(tagPropVal)) != 1 {
 					return f, fmt.Errorf("short value must be a single rune, got %q", tagPropVal)
 				}
+<<<<<<< HEAD
 				f.shortFlagChar = []rune(tagPropVal)[0]
 			case "default":
 				f.defaultVal = tagPropVal
@@ -175,6 +239,17 @@ func parseTag(tagStr string) (fieldOptions, error) {
 				f.flagName = tagPropVal
 			case "help":
 				f.help = tagPropVal
+=======
+				f.ShortFlagChar = []rune(tagPropVal)[0]
+			case "default":
+				f.DefaultVal = tagPropVal
+			case "env":
+				f.EnvName = tagPropVal
+			case "flag":
+				f.FlagName = tagPropVal
+			case "help":
+				f.Help = tagPropVal
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			}
 		default:
 			// TODO: Do we check for integrity issues here?
@@ -183,7 +258,11 @@ func parseTag(tagStr string) (fieldOptions, error) {
 
 	// Perform a sanity check.
 	switch {
+<<<<<<< HEAD
 	case f.required && f.defaultVal != "":
+=======
+	case f.Required && f.DefaultVal != "":
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		return f, fmt.Errorf("cannot set both `required` and `default`")
 	}
 
@@ -300,7 +379,11 @@ func processField(value string, field reflect.Value) error {
 		}
 		field.SetFloat(val)
 	case reflect.Slice:
+<<<<<<< HEAD
 		vals := strings.Split(value, ",")
+=======
+		vals := strings.Split(value, ";")
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		sl := reflect.MakeSlice(typ, len(vals), len(vals))
 		for i, val := range vals {
 			err := processField(val, sl.Index(i))
@@ -312,7 +395,11 @@ func processField(value string, field reflect.Value) error {
 	case reflect.Map:
 		mp := reflect.MakeMap(typ)
 		if len(strings.TrimSpace(value)) != 0 {
+<<<<<<< HEAD
 			pairs := strings.Split(value, ",")
+=======
+			pairs := strings.Split(value, ";")
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			for _, pair := range pairs {
 				kvpair := strings.Split(pair, ":")
 				if len(kvpair) != 2 {

@@ -1,12 +1,17 @@
 # pq - A pure Go postgres driver for Go's database/sql package
 
+<<<<<<< HEAD
 [![GoDoc](https://godoc.org/github.com/lib/pq?status.svg)](https://godoc.org/github.com/lib/pq)
 [![Build Status](https://travis-ci.org/lib/pq.svg?branch=master)](https://travis-ci.org/lib/pq)
+=======
+[![GoDoc](https://godoc.org/github.com/lib/pq?status.svg)](https://pkg.go.dev/github.com/lib/pq?tab=doc)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 ## Install
 
 	go get github.com/lib/pq
 
+<<<<<<< HEAD
 ## Docs
 
 For detailed documentation and basic usage examples, please see the package
@@ -16,6 +21,8 @@ documentation at <https://godoc.org/github.com/lib/pq>.
 
 `go test` is used for testing.  See [TESTS.md](TESTS.md) for more details.
 
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 ## Features
 
 * SSL
@@ -29,6 +36,7 @@ documentation at <https://godoc.org/github.com/lib/pq>.
 * Unix socket support
 * Notifications: `LISTEN`/`NOTIFY`
 * pgpass support
+<<<<<<< HEAD
 
 ## Future / Things you can help with
 
@@ -93,3 +101,14 @@ code still exists in here.
 * TruongSinh Tran-Nguyen (truongsinh)
 * Yaismel Miranda (ympons)
 * notedit (notedit)
+=======
+* GSS (Kerberos) auth
+
+## Tests
+
+`go test` is used for testing.  See [TESTS.md](TESTS.md) for more details.
+
+## Status
+
+This package is effectively in maintenance mode and is not actively developed. Small patches and features are only rarely reviewed and merged. We recommend using [pgx](https://github.com/jackc/pgx) which is actively maintained.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

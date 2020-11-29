@@ -70,6 +70,7 @@ postgresql_uninstall() {
 	sudo rm -rf /var/lib/postgresql
 }
 
+<<<<<<< HEAD
 megacheck_install() {
 	# Lock megacheck version at $MEGACHECK_VERSION to prevent spontaneous
 	# new error messages in old code.
@@ -83,4 +84,6 @@ golint_install() {
 	go get golang.org/x/lint/golint
 }
 
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 $1

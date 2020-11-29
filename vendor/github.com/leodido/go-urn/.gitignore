@@ -6,4 +6,10 @@
 *.test
 
 *.out
+<<<<<<< HEAD
 *.txt
+=======
+*.txt
+
+vendor/
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

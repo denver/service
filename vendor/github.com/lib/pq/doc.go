@@ -241,5 +241,31 @@ bytes by the PostgreSQL server.
 You can find a complete, working example of Listener usage at
 https://godoc.org/github.com/lib/pq/example/listen.
 
+<<<<<<< HEAD
+=======
+
+Kerberos Support
+
+
+If you need support for Kerberos authentication, add the following to your main
+package:
+
+	import "github.com/lib/pq/auth/kerberos"
+
+	func init() {
+		pq.RegisterGSSProvider(func() (pq.Gss, error) { return kerberos.NewGSS() })
+	}
+
+This package is in a separate module so that users who don't need Kerberos
+don't have to download unnecessary dependencies.
+
+When imported, additional connection string parameters are supported:
+
+	* krbsrvname - GSS (Kerberos) service name when constructing the
+	  SPN (default is `postgres`). This will be combined with the host
+	  to form the full SPN: `krbsrvname/host`.
+	* krbspn - GSS (Kerberos) SPN. This takes priority over
+	  `krbsrvname` if present.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 */
 package pq

@@ -3,6 +3,12 @@ language: go
 go:
   - 1.9.x
   - 1.10.x
+<<<<<<< HEAD
+=======
+  - 1.11.x
+  - 1.12.x
+  - 1.13.x
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
   - tip
 
 before_install:

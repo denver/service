@@ -17,6 +17,10 @@ package model
 import (
 	"encoding/json"
 	"errors"
+<<<<<<< HEAD
+=======
+	"strings"
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	"time"
 )
 
@@ -87,6 +91,11 @@ func (s SpanModel) MarshalJSON() ([]byte, error) {
 		s.Duration += 500 * time.Nanosecond
 	}
 
+<<<<<<< HEAD
+=======
+	s.Name = strings.ToLower(s.Name)
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	if s.LocalEndpoint.Empty() {
 		s.LocalEndpoint = nil
 	}

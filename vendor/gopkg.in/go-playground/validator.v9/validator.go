@@ -7,7 +7,11 @@ import (
 	"strconv"
 )
 
+<<<<<<< HEAD
 // per validate contruct
+=======
+// per validate construct
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 type validate struct {
 	v              *Validate
 	top            reflect.Value
@@ -94,7 +98,10 @@ func (v *validate) validateStruct(ctx context.Context, parent reflect.Value, cur
 
 // traverseField validates any field, be it a struct or single field, ensures it's validity and passes it along to be validated via it's tag options
 func (v *validate) traverseField(ctx context.Context, parent reflect.Value, current reflect.Value, ns []byte, structNs []byte, cf *cField, ct *cTag) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	var typ reflect.Type
 	var kind reflect.Kind
 
@@ -112,16 +119,18 @@ func (v *validate) traverseField(ctx context.Context, parent reflect.Value, curr
 		}
 
 		if ct.hasTag {
+<<<<<<< HEAD
 
 			v.str1 = string(append(ns, cf.altName...))
 
-			if v.v.hasTagNameFunc {
-				v.str2 = string(append(structNs, cf.name...))
-			} else {
-				v.str2 = v.str1
-			}
-
+=======
 			if kind == reflect.Invalid {
+				v.str1 = string(append(ns, cf.altName...))
+				if v.v.hasTagNameFunc {
+					v.str2 = string(append(structNs, cf.name...))
+				} else {
+					v.str2 = v.str1
+				}
 				v.errs = append(v.errs,
 					&fieldError{
 						v:              v.v,
@@ -131,6 +140,36 @@ func (v *validate) traverseField(ctx context.Context, parent reflect.Value, curr
 						structNs:       v.str2,
 						fieldLen:       uint8(len(cf.altName)),
 						structfieldLen: uint8(len(cf.name)),
+						param:          ct.param,
+						kind:           kind,
+					},
+				)
+				return
+			}
+
+			v.str1 = string(append(ns, cf.altName...))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
+			if v.v.hasTagNameFunc {
+				v.str2 = string(append(structNs, cf.name...))
+			} else {
+				v.str2 = v.str1
+			}
+<<<<<<< HEAD
+
+			if kind == reflect.Invalid {
+=======
+			if !ct.runValidationWhenNil {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
+				v.errs = append(v.errs,
+					&fieldError{
+						v:              v.v,
+						tag:            ct.aliasTag,
+						actualTag:      ct.tag,
+						ns:             v.str1,
+						structNs:       v.str2,
+						fieldLen:       uint8(len(cf.altName)),
+						structfieldLen: uint8(len(cf.name)),
+<<<<<<< HEAD
 						param:          ct.param,
 						kind:           kind,
 					},
@@ -156,6 +195,16 @@ func (v *validate) traverseField(ctx context.Context, parent reflect.Value, curr
 			)
 
 			return
+=======
+						value:          current.Interface(),
+						param:          ct.param,
+						kind:           kind,
+						typ:            current.Type(),
+					},
+				)
+				return
+			}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		}
 
 	case reflect.Struct:

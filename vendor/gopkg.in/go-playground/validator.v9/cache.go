@@ -39,9 +39,13 @@ func (sc *structCache) Get(key reflect.Type) (c *cStruct, found bool) {
 }
 
 func (sc *structCache) Set(key reflect.Type, value *cStruct) {
+<<<<<<< HEAD
 
 	m := sc.m.Load().(map[reflect.Type]*cStruct)
 
+=======
+	m := sc.m.Load().(map[reflect.Type]*cStruct)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	nm := make(map[reflect.Type]*cStruct, len(m)+1)
 	for k, v := range m {
 		nm[k] = v
@@ -61,9 +65,13 @@ func (tc *tagCache) Get(key string) (c *cTag, found bool) {
 }
 
 func (tc *tagCache) Set(key string, value *cTag) {
+<<<<<<< HEAD
 
 	m := tc.m.Load().(map[string]*cTag)
 
+=======
+	m := tc.m.Load().(map[string]*cTag)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	nm := make(map[string]*cTag, len(m)+1)
 	for k, v := range m {
 		nm[k] = v
@@ -87,6 +95,7 @@ type cField struct {
 }
 
 type cTag struct {
+<<<<<<< HEAD
 	tag            string
 	aliasTag       string
 	actualAliasTag string
@@ -103,6 +112,24 @@ type cTag struct {
 
 func (v *Validate) extractStructCache(current reflect.Value, sName string) *cStruct {
 
+=======
+	tag                  string
+	aliasTag             string
+	actualAliasTag       string
+	param                string
+	keys                 *cTag // only populated when using tag's 'keys' and 'endkeys' for map key validation
+	next                 *cTag
+	fn                   FuncCtx
+	typeof               tagType
+	hasTag               bool
+	hasAlias             bool
+	hasParam             bool // true if parameter used eg. eq= where the equal sign has been set
+	isBlockEnd           bool // indicates the current tag represents the last validation in the block
+	runValidationWhenNil bool
+}
+
+func (v *Validate) extractStructCache(current reflect.Value, sName string) *cStruct {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	v.structCache.lock.Lock()
 	defer v.structCache.lock.Unlock() // leave as defer! because if inner panics, it will never get unlocked otherwise!
 
@@ -141,9 +168,13 @@ func (v *Validate) extractStructCache(current reflect.Value, sName string) *cStr
 		customName = fld.Name
 
 		if v.hasTagNameFunc {
+<<<<<<< HEAD
 
 			name := v.tagNameFunc(fld)
 
+=======
+			name := v.tagNameFunc(fld)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			if len(name) > 0 {
 				customName = name
 			}
@@ -168,23 +199,35 @@ func (v *Validate) extractStructCache(current reflect.Value, sName string) *cStr
 			namesEqual: fld.Name == customName,
 		})
 	}
+<<<<<<< HEAD
 
 	v.structCache.Set(typ, cs)
 
+=======
+	v.structCache.Set(typ, cs)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	return cs
 }
 
 func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias string, hasAlias bool) (firstCtag *cTag, current *cTag) {
+<<<<<<< HEAD
 
 	var t string
 	var ok bool
+=======
+	var t string
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	noAlias := len(alias) == 0
 	tags := strings.Split(tag, tagSeparator)
 
 	for i := 0; i < len(tags); i++ {
+<<<<<<< HEAD
 
 		t = tags[i]
 
+=======
+		t = tags[i]
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		if noAlias {
 			alias = t
 		}
@@ -198,14 +241,21 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 				current.next, current = next, curr
 
 			}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			continue
 		}
 
 		var prevTag tagType
 
 		if i == 0 {
+<<<<<<< HEAD
 			current = &cTag{aliasTag: alias, hasAlias: hasAlias, hasTag: true}
+=======
+			current = &cTag{aliasTag: alias, hasAlias: hasAlias, hasTag: true, typeof: typeDefault}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			firstCtag = current
 		} else {
 			prevTag = current.typeof
@@ -214,7 +264,10 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 		}
 
 		switch t {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		case diveTag:
 			current.typeof = typeDive
 			continue
@@ -270,18 +323,28 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 			continue
 
 		default:
+<<<<<<< HEAD
 
 			if t == isdefault {
 				current.typeof = typeIsDefault
 			}
 
+=======
+			if t == isdefault {
+				current.typeof = typeIsDefault
+			}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			// if a pipe character is needed within the param you must use the utf8Pipe representation "0x7C"
 			orVals := strings.Split(t, orSeparator)
 
 			for j := 0; j < len(orVals); j++ {
+<<<<<<< HEAD
 
 				vals := strings.SplitN(orVals[j], tagKeySeparator, 2)
 
+=======
+				vals := strings.SplitN(orVals[j], tagKeySeparator, 2)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				if noAlias {
 					alias = vals[0]
 					current.aliasTag = alias
@@ -300,7 +363,14 @@ func (v *Validate) parseFieldTagsRecursive(tag string, fieldName string, alias s
 					panic(strings.TrimSpace(fmt.Sprintf(invalidValidation, fieldName)))
 				}
 
+<<<<<<< HEAD
 				if current.fn, ok = v.validations[current.tag]; !ok {
+=======
+				if wrapper, ok := v.validations[current.tag]; ok {
+					current.fn = wrapper.fn
+					current.runValidationWhenNil = wrapper.runValidatinOnNil
+				} else {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 					panic(strings.TrimSpace(fmt.Sprintf(undefinedValidation, current.tag, fieldName)))
 				}
 

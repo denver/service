@@ -1,7 +1,12 @@
 ## universal-translator
+<<<<<<< HEAD
 <img align="right" src="https://raw.githubusercontent.com/go-playground/universal-translator/master/logo.png">
 ![Project status](https://img.shields.io/badge/version-0.16.0-green.svg)
 [![Build Status](https://semaphoreci.com/api/v1/joeybloggs/universal-translator/branches/master/badge.svg)](https://semaphoreci.com/joeybloggs/universal-translator)
+=======
+<img align="right" src="https://raw.githubusercontent.com/go-playground/universal-translator/master/logo.png">![Project status](https://img.shields.io/badge/version-0.17.0-green.svg)
+[![Build Status](https://travis-ci.org/go-playground/universal-translator.svg?branch=master)](https://travis-ci.org/go-playground/universal-translator)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 [![Coverage Status](https://coveralls.io/repos/github/go-playground/universal-translator/badge.svg)](https://coveralls.io/github/go-playground/universal-translator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-playground/universal-translator)](https://goreportcard.com/report/github.com/go-playground/universal-translator)
 [![GoDoc](https://godoc.org/github.com/go-playground/universal-translator?status.svg)](https://godoc.org/github.com/go-playground/universal-translator)
@@ -46,9 +51,15 @@ Please see https://godoc.org/github.com/go-playground/universal-translator for u
 
 ##### Examples:
 
+<<<<<<< HEAD
 - [Basic](https://github.com/go-playground/universal-translator/tree/master/examples/basic)
 - [Full - no files](https://github.com/go-playground/universal-translator/tree/master/examples/full-no-files)
 - [Full - with files](https://github.com/go-playground/universal-translator/tree/master/examples/full-with-files)
+=======
+- [Basic](https://github.com/go-playground/universal-translator/tree/master/_examples/basic)
+- [Full - no files](https://github.com/go-playground/universal-translator/tree/master/_examples/full-no-files)
+- [Full - with files](https://github.com/go-playground/universal-translator/tree/master/_examples/full-with-files)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 File formatting
 --------------
@@ -57,10 +68,17 @@ they are only separated for easy viewing.
 
 ##### Examples:
 
+<<<<<<< HEAD
 - [Formats](https://github.com/go-playground/universal-translator/tree/master/examples/file-formats)
 
 ##### Basic Makeup
 NOTE: not all fields are needed for all translation types, see [examples](https://github.com/go-playground/universal-translator/tree/master/examples/file-formats)
+=======
+- [Formats](https://github.com/go-playground/universal-translator/tree/master/_examples/file-formats)
+
+##### Basic Makeup
+NOTE: not all fields are needed for all translation types, see [examples](https://github.com/go-playground/universal-translator/tree/master/_examples/file-formats)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 ```json
 {
     "locale": "en",

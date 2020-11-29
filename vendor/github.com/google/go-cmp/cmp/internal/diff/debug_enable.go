@@ -1,8 +1,14 @@
 // Copyright 2017, The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
+<<<<<<< HEAD
 // license that can be found in the LICENSE.md file.
 
 // +build debug
+=======
+// license that can be found in the LICENSE file.
+
+// +build cmp_debug
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 package diff
 
@@ -14,7 +20,11 @@ import (
 )
 
 // The algorithm can be seen running in real-time by enabling debugging:
+<<<<<<< HEAD
 //	go test -tags=debug -v
+=======
+//	go test -tags=cmp_debug -v
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 // Example output:
 //	=== RUN   TestDifference/#34

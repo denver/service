@@ -49,6 +49,10 @@ type copyin struct {
 	buffer  []byte
 	rowData chan []byte
 	done    chan bool
+<<<<<<< HEAD
+=======
+	driver.Result
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 	closed bool
 
@@ -151,8 +155,17 @@ func (ci *copyin) resploop() {
 		switch t {
 		case 'C':
 			// complete
+<<<<<<< HEAD
 		case 'N':
 			// NoticeResponse
+=======
+			res, _ := ci.cn.parseComplete(r.string())
+			ci.setResult(res)
+		case 'N':
+			if n := ci.cn.noticeHandler; n != nil {
+				n(parseError(&r))
+			}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		case 'Z':
 			ci.cn.processReadyForQuery(&r)
 			ci.done <- true
@@ -199,6 +212,25 @@ func (ci *copyin) setError(err error) {
 	ci.Unlock()
 }
 
+<<<<<<< HEAD
+=======
+func (ci *copyin) setResult(result driver.Result) {
+	ci.Lock()
+	ci.Result = result
+	ci.Unlock()
+}
+
+func (ci *copyin) getResult() driver.Result {
+	ci.Lock()
+	result := ci.Result
+	if result == nil {
+		return driver.RowsAffected(0)
+	}
+	ci.Unlock()
+	return result
+}
+
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func (ci *copyin) NumInput() int {
 	return -1
 }
@@ -229,7 +261,15 @@ func (ci *copyin) Exec(v []driver.Value) (r driver.Result, err error) {
 	}
 
 	if len(v) == 0 {
+<<<<<<< HEAD
 		return nil, ci.Close()
+=======
+		if err := ci.Close(); err != nil {
+			return driver.RowsAffected(0), err
+		}
+
+		return ci.getResult(), nil
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	}
 
 	numValues := len(v)

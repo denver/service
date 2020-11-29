@@ -66,7 +66,11 @@ func (b *writeBuf) int16(n int) {
 }
 
 func (b *writeBuf) string(s string) {
+<<<<<<< HEAD
 	b.buf = append(b.buf, (s + "\000")...)
+=======
+	b.buf = append(append(b.buf, s...), '\000')
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 }
 
 func (b *writeBuf) byte(c byte) {
