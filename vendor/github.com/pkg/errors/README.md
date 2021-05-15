@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+# errors [![Travis-CI](https://travis-ci.org/pkg/errors.svg)](https://travis-ci.org/pkg/errors) [![AppVeyor](https://ci.appveyor.com/api/projects/status/b98mptawhudj53ep/branch/master?svg=true)](https://ci.appveyor.com/project/davecheney/errors/branch/master) [![GoDoc](https://godoc.org/github.com/pkg/errors?status.svg)](http://godoc.org/github.com/pkg/errors) [![Report card](https://goreportcard.com/badge/github.com/pkg/errors)](https://goreportcard.com/report/github.com/pkg/errors)
+=======
 # errors [![Travis-CI](https://travis-ci.org/pkg/errors.svg)](https://travis-ci.org/pkg/errors) [![AppVeyor](https://ci.appveyor.com/api/projects/status/b98mptawhudj53ep/branch/master?svg=true)](https://ci.appveyor.com/project/davecheney/errors/branch/master) [![GoDoc](https://godoc.org/github.com/pkg/errors?status.svg)](http://godoc.org/github.com/pkg/errors) [![Report card](https://goreportcard.com/badge/github.com/pkg/errors)](https://goreportcard.com/report/github.com/pkg/errors) [![Sourcegraph](https://sourcegraph.com/github.com/pkg/errors/-/badge.svg)](https://sourcegraph.com/github.com/pkg/errors?badge)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 Package errors provides simple error handling primitives.
 
@@ -41,6 +45,15 @@ default:
 
 [Read the package documentation for more information](https://godoc.org/github.com/pkg/errors).
 
+<<<<<<< HEAD
+## Contributing
+
+We welcome pull requests, bug fixes and issue reports. With that said, the bar for adding new symbols to this package is intentionally set high.
+
+Before proposing a change, please discuss your change by raising an issue.
+
+## Licence
+=======
 ## Roadmap
 
 With the upcoming [Go2 error proposals](https://go.googlesource.com/proposal/+/master/design/go2draft.md) this package is moving into maintenance mode. The roadmap for a 1.0 release is as follows:
@@ -55,5 +68,6 @@ Because of the Go2 errors changes, this package is not accepting proposals for n
 Before sending a PR, please discuss your change by raising an issue.
 
 ## License
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 BSD-2-Clause

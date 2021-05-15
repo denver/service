@@ -152,8 +152,13 @@ type FieldError interface {
 	// returns the FieldError's translated error
 	// from the provided 'ut.Translator' and registered 'TranslationFunc'
 	//
+<<<<<<< HEAD
+	// NOTE: is not registered translation can be found it returns the same
+	// as calling fe.Error()
+=======
 	// NOTE: if no registered translator can be found it returns the same as
 	// calling fe.Error()
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	Translate(ut ut.Translator) string
 
 	// Error returns the FieldError's message

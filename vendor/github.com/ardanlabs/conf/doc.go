@@ -55,8 +55,11 @@ OPTIONS
   --e-dur/-d/$CRUD_DURATION     <duration>  (default: 1s)
   --help/-h
   display this help message
+<<<<<<< HEAD
+=======
   --version/-v
   display version information
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 The API is a single call to Parse
 
@@ -88,6 +91,8 @@ such as this:
 	arg0 := cfg.Args.Num(0) // "serve"
 	arg1 := cfg.Args.Num(1) // "http"
 	arg2 := cfg.Args.Num(2) // "" empty string: not enough arguments
+<<<<<<< HEAD
+=======
 
 You can add a version with a description by adding the Version type to
 your config type
@@ -124,5 +129,6 @@ Then you can set these values at run time for display.
 		}
 		fmt.Println("parsing config", err)
 	}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 */
 package conf

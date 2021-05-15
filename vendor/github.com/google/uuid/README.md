@@ -16,4 +16,8 @@ change is the ability to represent an invalid UUID (vs a NIL UUID).
 
 Full `go doc` style documentation for the package can be viewed online without
 installing this package by using the GoDoc site here: 
+<<<<<<< HEAD
+http://godoc.org/github.com/google/uuid
+=======
 http://pkg.go.dev/github.com/google/uuid
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

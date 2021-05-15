@@ -245,40 +245,8 @@ ensures the value is not nil.
 
 	Usage: required
 
-Required If
-
-The field under validation must be present and not empty only if all
-the other specified fields are equal to the value following the specified
-field. For strings ensures value is not "". For slices, maps, pointers,
-interfaces, channels and functions ensures the value is not nil.
-
-	Usage: required_if
-
-Examples:
-
-	// require the field if the Field1 is equal to the parameter given:
-	Usage: required_if=Field1 foobar
-
-	// require the field if the Field1 and Field2 is equal to the value respectively:
-	Usage: required_if=Field1 foo Field2 bar
-
-Required Unless
-
-The field under validation must be present and not empty unless all
-the other specified fields are equal to the value following the specified
-field. For strings ensures value is not "". For slices, maps, pointers,
-interfaces, channels and functions ensures the value is not nil.
-
-	Usage: required_unless
-
-Examples:
-
-	// require the field unless the Field1 is equal to the parameter given:
-	Usage: required_unless=Field1 foobar
-
-	// require the field unless the Field1 and Field2 is equal to the value respectively:
-	Usage: required_unless=Field1 foo Field2 bar
-
+<<<<<<< HEAD
+=======
 Required With
 
 The field under validation must be present and not empty only if any
@@ -341,6 +309,7 @@ Example:
 	// require the field if the Field1 and Field2 is not present:
 	Usage: required_without_all=Field1 Field2
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 Is Default
 
 This validates that the value is the default value and is almost the
@@ -693,6 +662,11 @@ Unique
 
 For arrays & slices, unique will ensure that there are no duplicates.
 For maps, unique will ensure that there are no duplicate values.
+<<<<<<< HEAD
+
+	Usage: unique
+
+=======
 For slices of struct, unique will ensure that there are no duplicate values
 in a field of the struct specified via a parameter.
 
@@ -702,6 +676,7 @@ in a field of the struct specified via a parameter.
 	// For slices of struct:
 	Usage: unique=field
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 Alpha Only
 
 This validates that a string value contains ASCII alpha characters only
@@ -1268,14 +1243,37 @@ Validator notes:
 		And the best reason, you can submit a pull request and we can keep on
 		adding to the validation library of this package!
 
+<<<<<<< HEAD
+Panics
+
+This package panics when bad input is provided, this is by design, bad code like
+that should not make it to production.
+
+	type Test struct {
+		TestField string `validate:"nonexistantfunction=1"`
+	}
+
+	t := &Test{
+		TestField: "Test"
+	}
+
+	validate.Struct(t) // this will panic
+
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 Non standard validators
 
 A collection of validation rules that are frequently needed but are more
 complex than the ones found in the baked in validators.
+<<<<<<< HEAD
+A non standard validator must be registered manually using any tag you like.
+See below examples of registration and use.
+=======
 A non standard validator must be registered manually like you would
 with your own custom validation functions.
 
 Example of registration and use:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 	type Test struct {
 		TestField string `validate:"yourtag"`
@@ -1286,9 +1284,13 @@ Example of registration and use:
 	}
 
 	validate := validator.New()
+<<<<<<< HEAD
+	validate.RegisterValidation("yourtag", validations.ValidatorName)
+=======
 	validate.RegisterValidation("yourtag", validators.NotBlank)
 
 Here is a list of the current non standard validators:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 	NotBlank
 		This validates that the value is not blank or with length zero.
@@ -1296,6 +1298,8 @@ Here is a list of the current non standard validators:
 		ensures they don't have zero length. For others, a non empty value is required.
 
 		Usage: notblank
+<<<<<<< HEAD
+=======
 
 Panics
 
@@ -1311,5 +1315,6 @@ that should not make it to production.
 	}
 
 	validate.Struct(t) // this will panic
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 */
 package validator

@@ -478,13 +478,21 @@ func errRecoverNoErrBadConn(err *error) {
 	}
 }
 
+<<<<<<< HEAD
+func (c *conn) errRecover(err *error) {
+=======
 func (cn *conn) errRecover(err *error) {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	e := recover()
 	switch v := e.(type) {
 	case nil:
 		// Do nothing
 	case runtime.Error:
-		cn.setBad()
+<<<<<<< HEAD
+		c.bad = true
+=======
+		cn.bad = true
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		panic(v)
 	case *Error:
 		if v.Fatal() {
@@ -493,7 +501,11 @@ func (cn *conn) errRecover(err *error) {
 			*err = v
 		}
 	case *net.OpError:
-		cn.setBad()
+<<<<<<< HEAD
+		c.bad = true
+=======
+		cn.bad = true
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		*err = v
 	case *safeRetryError:
 		cn.setBad()
@@ -506,13 +518,21 @@ func (cn *conn) errRecover(err *error) {
 		}
 
 	default:
-		cn.setBad()
+<<<<<<< HEAD
+		c.bad = true
+=======
+		cn.bad = true
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		panic(fmt.Sprintf("unknown error: %#v", e))
 	}
 
 	// Any time we return ErrBadConn, we need to remember it since *Tx doesn't
 	// mark the connection bad in database/sql.
 	if *err == driver.ErrBadConn {
-		cn.setBad()
+<<<<<<< HEAD
+		c.bad = true
+=======
+		cn.bad = true
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	}
 }

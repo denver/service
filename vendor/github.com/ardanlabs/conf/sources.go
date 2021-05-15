@@ -39,19 +39,25 @@ func newSourceEnv(namespace string) *env {
 
 // Source implements the confg.Sourcer interface. It returns the stringfied value
 // stored at the specified key from the environment.
+<<<<<<< HEAD
+func (e *env) Source(fld field) (string, bool) {
+	k := strings.ToUpper(strings.Join(fld.envKey, `_`))
+=======
 func (e *env) Source(fld Field) (string, bool) {
 	k := strings.ToUpper(strings.Join(fld.EnvKey, `_`))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	v, ok := e.m[k]
 	return v, ok
 }
 
 // envUsage constructs a usage string for the environment variable.
+<<<<<<< HEAD
+func envUsage(namespace string, fld field) string {
+	return "$" + strings.ToUpper(namespace) + "_" + strings.ToUpper(strings.Join(fld.envKey, `_`))
+=======
 func envUsage(namespace string, fld Field) string {
-	uspace := strings.ToUpper(namespace) + "_" + strings.ToUpper(strings.Join(fld.EnvKey, `_`))
-	if namespace == "" {
-		uspace = uspace[1:]
-	}
-	return "$" + uspace
+	return "$" + strings.ToUpper(namespace) + "_" + strings.ToUpper(strings.Join(fld.EnvKey, `_`))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 }
 
 // =============================================================================
@@ -59,9 +65,12 @@ func envUsage(namespace string, fld Field) string {
 // ErrHelpWanted provides an indication help was requested.
 var ErrHelpWanted = errors.New("help wanted")
 
+<<<<<<< HEAD
+=======
 // ErrVersionWanted provides an indication version was requested.
 var ErrVersionWanted = errors.New("version wanted")
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 // flag is a source for command line arguments.
 type flag struct {
 	m    map[string]string
@@ -120,15 +129,22 @@ func newSourceFlag(args []string) (*flag, error) {
 				return nil, ErrHelpWanted
 			}
 
+<<<<<<< HEAD
+=======
 			if name == "version" || name == "v" {
 				return nil, ErrVersionWanted
 			}
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			// If we don't have a value yet, it's possible the flag was not in the
 			// -flag=value format which means it might still have a value which would be
 			// the next argument, provided the next argument isn't a flag.
 			if !hasValue {
+<<<<<<< HEAD
+				if len(args) > 0 && args[0][0] != '-' {
+=======
 				if len(args) > 0 && len(args[0]) > 0 && args[0][0] != '-' {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 					// Doesn't look like a flag. Must be a value.
 					value, args = args[0], args[1:]
@@ -149,25 +165,43 @@ func newSourceFlag(args []string) (*flag, error) {
 
 // Source implements the confg.Sourcer interface. Returns the stringfied value
 // stored at the specified key from the flag source.
+<<<<<<< HEAD
+func (f *flag) Source(fld field) (string, bool) {
+	if fld.options.shortFlagChar != 0 {
+		flagKey := []string{string(fld.options.shortFlagChar)}
+		k := strings.ToLower(strings.Join(flagKey, `-`))
+=======
 func (f *flag) Source(fld Field) (string, bool) {
 	if fld.Options.ShortFlagChar != 0 {
 		flagKey := fld.Options.ShortFlagChar
 		k := strings.ToLower(string(flagKey))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		if val, found := f.m[k]; found {
 			return val, found
 		}
 	}
 
+<<<<<<< HEAD
+	k := strings.ToLower(strings.Join(fld.flagKey, `-`))
+=======
 	k := strings.ToLower(strings.Join(fld.FlagKey, `-`))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	val, found := f.m[k]
 	return val, found
 }
 
 // flagUsage constructs a usage string for the flag argument.
+<<<<<<< HEAD
+func flagUsage(fld field) string {
+	usage := "--" + strings.ToLower(strings.Join(fld.flagKey, `-`))
+	if fld.options.shortFlagChar != 0 {
+		flagKey := []string{string(fld.options.shortFlagChar)}
+=======
 func flagUsage(fld Field) string {
 	usage := "--" + strings.ToLower(strings.Join(fld.FlagKey, `-`))
 	if fld.Options.ShortFlagChar != 0 {
 		flagKey := []string{string(fld.Options.ShortFlagChar)}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		usage += "/-" + strings.ToLower(strings.Join(flagKey, `-`))
 	}
 

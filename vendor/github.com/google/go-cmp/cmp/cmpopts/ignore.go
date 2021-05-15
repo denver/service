@@ -1,6 +1,10 @@
 // Copyright 2017, The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
+<<<<<<< HEAD
+// license that can be found in the LICENSE.md file.
+=======
 // license that can be found in the LICENSE file.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 package cmpopts
 
@@ -11,16 +15,28 @@ import (
 	"unicode/utf8"
 
 	"github.com/google/go-cmp/cmp"
+<<<<<<< HEAD
+)
+
+// IgnoreFields returns an Option that ignores exported fields of the
+// given names on a single struct type.
+=======
 	"github.com/google/go-cmp/cmp/internal/function"
 )
 
 // IgnoreFields returns an Option that ignores fields of the
 // given names on a single struct type. It respects the names of exported fields
 // that are forwarded due to struct embedding.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 // The struct type is specified by passing in a value of that type.
 //
 // The name may be a dot-delimited string (e.g., "Foo.Bar") to ignore a
 // specific sub-field that is embedded or nested within the parent struct.
+<<<<<<< HEAD
+//
+// This does not handle unexported fields; use IgnoreUnexported instead.
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func IgnoreFields(typ interface{}, names ...string) cmp.Option {
 	sf := newStructFilter(typ, names...)
 	return cmp.FilterPath(sf.filter, cmp.Ignore())
@@ -112,10 +128,13 @@ func (tf ifaceFilter) filter(p cmp.Path) bool {
 // In particular, unexported fields within the struct's exported fields
 // of struct types, including anonymous fields, will not be ignored unless the
 // type of the field itself is also passed to IgnoreUnexported.
+<<<<<<< HEAD
+=======
 //
 // Avoid ignoring unexported fields of a type which you do not control (i.e. a
 // type from another repository), as changes to the implementation of such types
 // may change how the comparison behaves. Prefer a custom Comparer instead.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func IgnoreUnexported(typs ...interface{}) cmp.Option {
 	ux := newUnexportedFilter(typs...)
 	return cmp.FilterPath(ux.filter, cmp.Ignore())
@@ -128,7 +147,11 @@ func newUnexportedFilter(typs ...interface{}) unexportedFilter {
 	for _, typ := range typs {
 		t := reflect.TypeOf(typ)
 		if t == nil || t.Kind() != reflect.Struct {
+<<<<<<< HEAD
+			panic(fmt.Sprintf("invalid struct type: %T", typ))
+=======
 			panic(fmt.Sprintf("%T must be a non-pointer struct", typ))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		}
 		ux.m[t] = true
 	}
@@ -147,6 +170,8 @@ func isExported(id string) bool {
 	r, _ := utf8.DecodeRuneInString(id)
 	return unicode.IsUpper(r)
 }
+<<<<<<< HEAD
+=======
 
 // IgnoreSliceElements returns an Option that ignores elements of []V.
 // The discard function must be of the form "func(T) bool" which is used to
@@ -204,3 +229,4 @@ func IgnoreMapEntries(discardFunc interface{}) cmp.Option {
 		return false
 	}, cmp.Ignore())
 }
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

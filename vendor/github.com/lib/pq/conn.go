@@ -98,7 +98,10 @@ type Dialer interface {
 	DialTimeout(network, address string, timeout time.Duration) (net.Conn, error)
 }
 
+<<<<<<< HEAD
+=======
 // DialerContext is the context-aware dialer interface.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 type DialerContext interface {
 	DialContext(ctx context.Context, network, address string) (net.Conn, error)
 }
@@ -155,6 +158,8 @@ type conn struct {
 
 	// If true this connection is in the middle of a COPY
 	inCopy bool
+<<<<<<< HEAD
+=======
 
 	// If not nil, notices will be synchronously sent here
 	noticeHandler func(*Error)
@@ -164,6 +169,7 @@ type conn struct {
 
 	// GSSAPI context
 	gss GSS
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 }
 
 // Handle driver-side settings in parsed connection string.
@@ -326,9 +332,12 @@ func (c *Connector) open(ctx context.Context) (cn *conn, err error) {
 
 	err = cn.ssl(o)
 	if err != nil {
+<<<<<<< HEAD
+=======
 		if cn.c != nil {
 			cn.c.Close()
 		}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		return nil, err
 	}
 
@@ -353,6 +362,13 @@ func (c *Connector) open(ctx context.Context) (cn *conn, err error) {
 
 func dial(ctx context.Context, d Dialer, o values) (net.Conn, error) {
 	network, address := network(o)
+<<<<<<< HEAD
+	// SSL is not necessary or supported over UNIX domain sockets
+	if network == "unix" {
+		o["sslmode"] = "disable"
+	}
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 	// Zero or not specified means wait indefinitely.
 	if timeout, ok := o["connect_timeout"]; ok && timeout != "0" {
@@ -583,7 +599,11 @@ func (cn *conn) Commit() (err error) {
 	// would get the same behaviour if you issued a COMMIT in a failed
 	// transaction, so it's also the least surprising thing to do here.
 	if cn.txnStatus == txnStatusInFailedTransaction {
+<<<<<<< HEAD
+		if err := cn.Rollback(); err != nil {
+=======
 		if err := cn.rollback(); err != nil {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			return err
 		}
 		return ErrInFailedTransaction
@@ -610,10 +630,14 @@ func (cn *conn) Rollback() (err error) {
 		return driver.ErrBadConn
 	}
 	defer cn.errRecover(&err)
+<<<<<<< HEAD
+
+=======
 	return cn.rollback()
 }
 
 func (cn *conn) rollback() (err error) {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	cn.checkIsInTransaction(true)
 	_, commandTag, err := cn.simpleExec("ROLLBACK")
 	if err != nil {
@@ -1018,6 +1042,9 @@ func (cn *conn) recv() (t byte, r *readBuf) {
 		case 'E':
 			panic(parseError(r))
 		case 'N':
+<<<<<<< HEAD
+			// ignore
+=======
 			if n := cn.noticeHandler; n != nil {
 				n(parseError(r))
 			}
@@ -1025,6 +1052,7 @@ func (cn *conn) recv() (t byte, r *readBuf) {
 			if n := cn.notificationHandler; n != nil {
 				n(recvNotification(r))
 			}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		default:
 			return
 		}
@@ -1041,6 +1069,10 @@ func (cn *conn) recv1Buf(r *readBuf) byte {
 		}
 
 		switch t {
+<<<<<<< HEAD
+		case 'A', 'N':
+			// ignore
+=======
 		case 'A':
 			if n := cn.notificationHandler; n != nil {
 				n(recvNotification(r))
@@ -1049,6 +1081,7 @@ func (cn *conn) recv1Buf(r *readBuf) byte {
 			if n := cn.noticeHandler; n != nil {
 				n(parseError(r))
 			}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		case 'S':
 			cn.processParameterStatus(r)
 		default:
@@ -1116,10 +1149,14 @@ func isDriverSetting(key string) bool {
 		return true
 	case "binary_parameters":
 		return true
+<<<<<<< HEAD
+
+=======
 	case "krbsrvname":
 		return true
 	case "krbspn":
 		return true
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	default:
 		return false
 	}
@@ -1199,6 +1236,8 @@ func (cn *conn) auth(r *readBuf, o values) {
 		if r.int32() != 0 {
 			errorf("unexpected authentication response: %q", t)
 		}
+<<<<<<< HEAD
+=======
 	case 7: // GSSAPI, startup
 		if newGss == nil {
 			errorf("kerberos error: no GSSAPI provider registered (import github.com/lib/pq/auth/kerberos if you need Kerberos support)")
@@ -1252,6 +1291,7 @@ func (cn *conn) auth(r *readBuf, o values) {
 		// Errors fall through and read the more detailed message
 		// from the server..
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	case 10:
 		sc := scram.NewClient(sha256.New, o["user"], o["password"])
 		sc.Step(nil)
@@ -1622,6 +1662,8 @@ func QuoteIdentifier(name string) string {
 	return `"` + strings.Replace(name, `"`, `""`, -1) + `"`
 }
 
+<<<<<<< HEAD
+=======
 // QuoteLiteral quotes a 'literal' (e.g. a parameter, often used to pass literal
 // to DDL and other statements that do not accept parameters) to be used as part
 // of an SQL statement.  For example:
@@ -1655,6 +1697,7 @@ func QuoteLiteral(literal string) string {
 	return literal
 }
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func md5s(s string) string {
 	h := md5.New()
 	h.Write([]byte(s))

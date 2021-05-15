@@ -6,7 +6,11 @@
 //             return err
 //     }
 //
+<<<<<<< HEAD
+// which applied recursively up the call stack results in error reports
+=======
 // which when applied recursively up the call stack results in error reports
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 // without context or debugging information. The errors package allows
 // programmers to add context to the failure path in their code in a way
 // that does not destroy the original value of the error.
@@ -15,17 +19,27 @@
 //
 // The errors.Wrap function returns a new error that adds context to the
 // original error by recording a stack trace at the point Wrap is called,
+<<<<<<< HEAD
+// and the supplied message. For example
+=======
 // together with the supplied message. For example
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 //     _, err := ioutil.ReadAll(r)
 //     if err != nil {
 //             return errors.Wrap(err, "read failed")
 //     }
 //
+<<<<<<< HEAD
+// If additional control is required the errors.WithStack and errors.WithMessage
+// functions destructure errors.Wrap into its component operations of annotating
+// an error with a stack trace and an a message, respectively.
+=======
 // If additional control is required, the errors.WithStack and
 // errors.WithMessage functions destructure errors.Wrap into its component
 // operations: annotating an error with a stack trace and with a message,
 // respectively.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 // Retrieving the cause of an error
 //
@@ -39,7 +53,11 @@
 //     }
 //
 // can be inspected by errors.Cause. errors.Cause will recursively retrieve
+<<<<<<< HEAD
+// the topmost error which does not implement causer, which is assumed to be
+=======
 // the topmost error that does not implement causer, which is assumed to be
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 // the original cause. For example:
 //
 //     switch err := errors.Cause(err).(type) {
@@ -49,16 +67,28 @@
 //             // unknown error
 //     }
 //
+<<<<<<< HEAD
+// causer interface is not exported by this package, but is considered a part
+// of stable public API.
+=======
 // Although the causer interface is not exported by this package, it is
 // considered a part of its stable public interface.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 // Formatted printing of errors
 //
 // All error values returned from this package implement fmt.Formatter and can
+<<<<<<< HEAD
+// be formatted by the fmt package. The following verbs are supported
+//
+//     %s    print the error. If the error has a Cause it will be
+//           printed recursively
+=======
 // be formatted by the fmt package. The following verbs are supported:
 //
 //     %s    print the error. If the error has a Cause it will be
 //           printed recursively.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //     %v    see %s
 //     %+v   extended format. Each Frame of the error's StackTrace will
 //           be printed in detail.
@@ -66,13 +96,21 @@
 // Retrieving the stack trace of an error or wrapper
 //
 // New, Errorf, Wrap, and Wrapf record a stack trace at the point they are
+<<<<<<< HEAD
+// invoked. This information can be retrieved with the following interface.
+=======
 // invoked. This information can be retrieved with the following interface:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 //     type stackTracer interface {
 //             StackTrace() errors.StackTrace
 //     }
 //
+<<<<<<< HEAD
+// Where errors.StackTrace is defined as
+=======
 // The returned errors.StackTrace type is defined as
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 //     type StackTrace []Frame
 //
@@ -82,12 +120,21 @@
 //
 //     if err, ok := err.(stackTracer); ok {
 //             for _, f := range err.StackTrace() {
+<<<<<<< HEAD
+//                     fmt.Printf("%+s:%d", f)
+//             }
+//     }
+//
+// stackTracer interface is not exported by this package, but is considered a part
+// of stable public API.
+=======
 //                     fmt.Printf("%+s:%d\n", f, f)
 //             }
 //     }
 //
 // Although the stackTracer interface is not exported by this package, it is
 // considered a part of its stable public interface.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 // See the documentation for Frame.Format for more details.
 package errors
@@ -159,9 +206,12 @@ type withStack struct {
 
 func (w *withStack) Cause() error { return w.error }
 
+<<<<<<< HEAD
+=======
 // Unwrap provides compatibility for Go 1.13 error chains.
 func (w *withStack) Unwrap() error { return w.error }
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func (w *withStack) Format(s fmt.State, verb rune) {
 	switch verb {
 	case 'v':
@@ -196,7 +246,11 @@ func Wrap(err error, message string) error {
 }
 
 // Wrapf returns an error annotating err with a stack trace
+<<<<<<< HEAD
+// at the point Wrapf is call, and the format specifier.
+=======
 // at the point Wrapf is called, and the format specifier.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 // If err is nil, Wrapf returns nil.
 func Wrapf(err error, format string, args ...interface{}) error {
 	if err == nil {
@@ -224,6 +278,8 @@ func WithMessage(err error, message string) error {
 	}
 }
 
+<<<<<<< HEAD
+=======
 // WithMessagef annotates err with the format specifier.
 // If err is nil, WithMessagef returns nil.
 func WithMessagef(err error, format string, args ...interface{}) error {
@@ -236,6 +292,7 @@ func WithMessagef(err error, format string, args ...interface{}) error {
 	}
 }
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 type withMessage struct {
 	cause error
 	msg   string
@@ -244,9 +301,12 @@ type withMessage struct {
 func (w *withMessage) Error() string { return w.msg + ": " + w.cause.Error() }
 func (w *withMessage) Cause() error  { return w.cause }
 
+<<<<<<< HEAD
+=======
 // Unwrap provides compatibility for Go 1.13 error chains.
 func (w *withMessage) Unwrap() error { return w.cause }
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func (w *withMessage) Format(s fmt.State, verb rune) {
 	switch verb {
 	case 'v':

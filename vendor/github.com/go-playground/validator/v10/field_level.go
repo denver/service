@@ -5,6 +5,10 @@ import "reflect"
 // FieldLevel contains all the information and helper functions
 // to validate a field
 type FieldLevel interface {
+<<<<<<< HEAD
+
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	// returns the top level struct, if any
 	Top() reflect.Value
 
@@ -25,9 +29,12 @@ type FieldLevel interface {
 	// returns param for validation against current field
 	Param() string
 
+<<<<<<< HEAD
+=======
 	// GetTag returns the current validations tag name
 	GetTag() string
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	// ExtractType gets the actual underlying type of field value.
 	// It will dive into pointers, customTypes and return you the
 	// underlying value and it's kind.
@@ -39,6 +46,9 @@ type FieldLevel interface {
 	//
 	// NOTE: when not successful ok will be false, this can happen when a nested struct is nil and so the field
 	// could not be retrieved because it didn't exist.
+<<<<<<< HEAD
+	GetStructFieldOK() (reflect.Value, reflect.Kind, bool)
+=======
 	//
 	// Deprecated: Use GetStructFieldOK2() instead which also return if the value is nullable.
 	GetStructFieldOK() (reflect.Value, reflect.Kind, bool)
@@ -60,6 +70,7 @@ type FieldLevel interface {
 	// GetStructFieldOKAdvanced is the same as GetStructFieldOK except that it accepts the parent struct to start looking for
 	// the field and namespace allowing more extensibility for validators.
 	GetStructFieldOKAdvanced2(val reflect.Value, namespace string) (reflect.Value, reflect.Kind, bool, bool)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 }
 
 var _ FieldLevel = new(validate)
@@ -70,16 +81,23 @@ func (v *validate) Field() reflect.Value {
 }
 
 // FieldName returns the field's name with the tag
+<<<<<<< HEAD
+// name takeing precedence over the fields actual name.
+=======
 // name taking precedence over the fields actual name.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func (v *validate) FieldName() string {
 	return v.cf.altName
 }
 
+<<<<<<< HEAD
+=======
 // GetTag returns the current validations tag name
 func (v *validate) GetTag() string {
 	return v.ct.tag
 }
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 // StructFieldName returns the struct field's name
 func (v *validate) StructFieldName() string {
 	return v.cf.name
@@ -91,6 +109,11 @@ func (v *validate) Param() string {
 }
 
 // GetStructFieldOK returns Param returns param for validation against current field
+<<<<<<< HEAD
+func (v *validate) GetStructFieldOK() (reflect.Value, reflect.Kind, bool) {
+	return v.getStructFieldOKInternal(v.slflParent, v.ct.param)
+}
+=======
 //
 // Deprecated: Use GetStructFieldOK2() instead which also return if the value is nullable.
 func (v *validate) GetStructFieldOK() (reflect.Value, reflect.Kind, bool) {
@@ -117,3 +140,4 @@ func (v *validate) GetStructFieldOK2() (reflect.Value, reflect.Kind, bool, bool)
 func (v *validate) GetStructFieldOKAdvanced2(val reflect.Value, namespace string) (reflect.Value, reflect.Kind, bool, bool) {
 	return v.getStructFieldOKInternal(val, namespace)
 }
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

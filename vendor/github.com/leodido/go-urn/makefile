@@ -1,5 +1,14 @@
 SHELL := /bin/bash
 
+<<<<<<< HEAD
+machine.go: machine.go.rl
+	ragel -Z -G2 -e -o $@ $<
+	@gofmt -w -s $@
+	@sed -i '/^\/\/line/d' $@
+
+.PHONY: build
+build: machine.go
+=======
 build: machine.go
 
 images: docs/urn.png
@@ -16,6 +25,7 @@ docs/urn.dot: machine.go.rl
 
 docs/urn.png: docs/urn.dot
 	dot $< -Tpng -o $@
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 .PHONY: bench
 bench: *_test.go machine.go
@@ -23,6 +33,9 @@ bench: *_test.go machine.go
 
 .PHONY: tests
 tests: *_test.go machine.go
+<<<<<<< HEAD
+	go test -race -timeout 10s -coverprofile=coverage.out -covermode=atomic -v ./...
+=======
 	go test -race -timeout 10s -coverprofile=coverage.out -covermode=atomic -v ./...
 
 .PHONY: clean
@@ -37,3 +50,4 @@ snake2camel:
 	$$0 = cap[1] cap[2] toupper(cap[3]) cap[4]; \
 	print \
 	}' $(file)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

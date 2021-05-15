@@ -4,8 +4,11 @@ package pq
 // This module contains support for Postgres LISTEN/NOTIFY.
 
 import (
+<<<<<<< HEAD
+=======
 	"context"
 	"database/sql/driver"
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	"errors"
 	"fmt"
 	"sync"
@@ -31,6 +34,8 @@ func recvNotification(r *readBuf) *Notification {
 	return &Notification{bePid, channel, extra}
 }
 
+<<<<<<< HEAD
+=======
 // SetNotificationHandler sets the given notification handler on the given
 // connection. A runtime panic occurs if c is not a pq connection. A nil handler
 // may be used to unset it.
@@ -86,6 +91,7 @@ func ConnectorWithNotificationHandler(c driver.Connector, handler func(*Notifica
 	return &NotificationHandlerConnector{Connector: c, notificationHandler: handler}
 }
 
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 const (
 	connStateIdle int32 = iota
 	connStateExpectResponse
@@ -231,12 +237,17 @@ func (l *ListenerConn) listenerConnLoop() (err error) {
 			}
 			l.replyChan <- message{t, nil}
 
+<<<<<<< HEAD
+		case 'N', 'S':
+			// ignore
+=======
 		case 'S':
 			// ignore
 		case 'N':
 			if n := l.cn.noticeHandler; n != nil {
 				n(parseError(r))
 			}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		default:
 			return fmt.Errorf("unexpected message %q from server in listenerConnLoop", t)
 		}

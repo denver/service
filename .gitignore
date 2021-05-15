@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+private.pem
+=======
 # Binaries
 app/sales-admin/sales-admin
 app/sales-api/sales-api
@@ -38,3 +41,4 @@ _testmain.go
 *.exe
 //*.test
 .vscode/tasks.json
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

@@ -1,15 +1,22 @@
 // Copyright 2017, The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
+<<<<<<< HEAD
+// license that can be found in the LICENSE.md file.
+=======
 // license that can be found in the LICENSE file.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 // Package cmp determines equality of values.
 //
 // This package is intended to be a more powerful and safer alternative to
 // reflect.DeepEqual for comparing whether two values are semantically equal.
+<<<<<<< HEAD
+=======
 // It is intended to only be used in tests, as performance is not a goal and
 // it may panic if it cannot compare the values. Its propensity towards
 // panicking means that its unsuitable for production environments where a
 // spurious panic may be fatal.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 // The primary features of cmp are:
 //
@@ -26,24 +33,51 @@
 // equality is determined by recursively comparing the primitive kinds on both
 // values, much like reflect.DeepEqual. Unlike reflect.DeepEqual, unexported
 // fields are not compared by default; they result in panics unless suppressed
+<<<<<<< HEAD
+// by using an Ignore option (see cmpopts.IgnoreUnexported) or explicitly compared
+// using the AllowUnexported option.
+=======
 // by using an Ignore option (see cmpopts.IgnoreUnexported) or explicitly
 // compared using the Exporter option.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 package cmp
 
 import (
 	"fmt"
 	"reflect"
+<<<<<<< HEAD
+
+	"github.com/google/go-cmp/cmp/internal/diff"
+=======
 	"strings"
 
 	"github.com/google/go-cmp/cmp/internal/diff"
 	"github.com/google/go-cmp/cmp/internal/flags"
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	"github.com/google/go-cmp/cmp/internal/function"
 	"github.com/google/go-cmp/cmp/internal/value"
 )
 
+<<<<<<< HEAD
+// BUG(dsnet): Maps with keys containing NaN values cannot be properly compared due to
+// the reflection package's inability to retrieve such entries. Equal will panic
+// anytime it comes across a NaN key, but this behavior may change.
+//
+// See https://golang.org/issue/11104 for more details.
+
+var nothing = reflect.Value{}
+
 // Equal reports whether x and y are equal by recursively applying the
 // following rules in the given order to x and y and all of their sub-values:
 //
+// • If two values are not of the same type, then they are never equal
+// and the overall result is false.
+//
+=======
+// Equal reports whether x and y are equal by recursively applying the
+// following rules in the given order to x and y and all of their sub-values:
+//
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 // • Let S be the set of all Ignore, Transformer, and Comparer options that
 // remain after applying all path filters, value filters, and type filters.
 // If at least one Ignore exists in S, then the comparison is ignored.
@@ -56,13 +90,52 @@ import (
 //
 // • If the values have an Equal method of the form "(T) Equal(T) bool" or
 // "(T) Equal(I) bool" where T is assignable to I, then use the result of
+<<<<<<< HEAD
+// x.Equal(y) even if x or y is nil.
+// Otherwise, no such method exists and evaluation proceeds to the next rule.
+=======
 // x.Equal(y) even if x or y is nil. Otherwise, no such method exists and
 // evaluation proceeds to the next rule.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 // • Lastly, try to compare x and y based on their basic kinds.
 // Simple kinds like booleans, integers, floats, complex numbers, strings, and
 // channels are compared using the equivalent of the == operator in Go.
 // Functions are only equal if they are both nil, otherwise they are unequal.
+<<<<<<< HEAD
+// Pointers are equal if the underlying values they point to are also equal.
+// Interfaces are equal if their underlying concrete values are also equal.
+//
+// Structs are equal if all of their fields are equal. If a struct contains
+// unexported fields, Equal panics unless the AllowUnexported option is used or
+// an Ignore option (e.g., cmpopts.IgnoreUnexported) ignores that field.
+//
+// Arrays, slices, and maps are equal if they are both nil or both non-nil
+// with the same length and the elements at each index or key are equal.
+// Note that a non-nil empty slice and a nil slice are not equal.
+// To equate empty slices and maps, consider using cmpopts.EquateEmpty.
+// Map keys are equal according to the == operator.
+// To use custom comparisons for map keys, consider using cmpopts.SortMaps.
+func Equal(x, y interface{}, opts ...Option) bool {
+	s := newState(opts)
+	s.compareAny(reflect.ValueOf(x), reflect.ValueOf(y))
+	return s.result.Equal()
+}
+
+// Diff returns a human-readable report of the differences between two values.
+// It returns an empty string if and only if Equal returns true for the same
+// input values and options. The output string will use the "-" symbol to
+// indicate elements removed from x, and the "+" symbol to indicate elements
+// added to y.
+//
+// Do not depend on this output being stable.
+func Diff(x, y interface{}, opts ...Option) string {
+	r := new(defaultReporter)
+	opts = Options{Options(opts), r}
+	eq := Equal(x, y, opts...)
+	d := r.String()
+	if (d == "") != eq {
+=======
 //
 // Structs are equal if recursively calling Equal on all fields report equal.
 // If a struct contains unexported fields, Equal panics unless an Ignore option
@@ -128,11 +201,20 @@ func Diff(x, y interface{}, opts ...Option) string {
 	s.compareAny(rootStep(x, y))
 	d := r.String()
 	if (d == "") != s.result.Equal() {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		panic("inconsistent difference and equality results")
 	}
 	return d
 }
 
+<<<<<<< HEAD
+type state struct {
+	// These fields represent the "comparison state".
+	// Calling statelessCompare must not result in observable changes to these.
+	result   diff.Result // The current result of comparison
+	curPath  Path        // The current path in the value tree
+	reporter reporter    // Optional reporter used for difference formatting
+=======
 // rootStep constructs the first path step. If x and y have differing types,
 // then they are stored within an empty interface type.
 func rootStep(x, y interface{}) PathStep {
@@ -172,12 +254,24 @@ type state struct {
 	// recChecker checks for infinite cycles applying the same set of
 	// transformers upon the output of itself.
 	recChecker recChecker
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 	// dynChecker triggers pseudo-random checks for option correctness.
 	// It is safe for statelessCompare to mutate this value.
 	dynChecker dynChecker
 
 	// These fields, once set by processOption, will not change.
+<<<<<<< HEAD
+	exporters map[reflect.Type]bool // Set of structs with unexported field visibility
+	opts      Options               // List of all fundamental and filter options
+}
+
+func newState(opts []Option) *state {
+	s := new(state)
+	for _, opt := range opts {
+		s.processOption(opt)
+	}
+=======
 	exporters []exporter // List of exporters for structs with unexported fields
 	opts      Options    // List of all fundamental and filter options
 }
@@ -187,6 +281,7 @@ func newState(opts []Option) *state {
 	s := &state{opts: Options{validator{}}}
 	s.curPtrs.Init()
 	s.processOption(Options(opts))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	return s
 }
 
@@ -205,10 +300,25 @@ func (s *state) processOption(opt Option) {
 			panic(fmt.Sprintf("cannot use an unfiltered option: %v", opt))
 		}
 		s.opts = append(s.opts, opt)
+<<<<<<< HEAD
+	case visibleStructs:
+		if s.exporters == nil {
+			s.exporters = make(map[reflect.Type]bool)
+		}
+		for t := range opt {
+			s.exporters[t] = true
+		}
+	case reporter:
+		if s.reporter != nil {
+			panic("difference reporter already registered")
+		}
+		s.reporter = opt
+=======
 	case exporter:
 		s.exporters = append(s.exporters, opt)
 	case reporter:
 		s.reporters = append(s.reporters, opt)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	default:
 		panic(fmt.Sprintf("unknown option %T", opt))
 	}
@@ -217,6 +327,44 @@ func (s *state) processOption(opt Option) {
 // statelessCompare compares two values and returns the result.
 // This function is stateless in that it does not alter the current result,
 // or output to any registered reporters.
+<<<<<<< HEAD
+func (s *state) statelessCompare(vx, vy reflect.Value) diff.Result {
+	// We do not save and restore the curPath because all of the compareX
+	// methods should properly push and pop from the path.
+	// It is an implementation bug if the contents of curPath differs from
+	// when calling this function to when returning from it.
+
+	oldResult, oldReporter := s.result, s.reporter
+	s.result = diff.Result{} // Reset result
+	s.reporter = nil         // Remove reporter to avoid spurious printouts
+	s.compareAny(vx, vy)
+	res := s.result
+	s.result, s.reporter = oldResult, oldReporter
+	return res
+}
+
+func (s *state) compareAny(vx, vy reflect.Value) {
+	// TODO: Support cyclic data structures.
+
+	// Rule 0: Differing types are never equal.
+	if !vx.IsValid() || !vy.IsValid() {
+		s.report(vx.IsValid() == vy.IsValid(), vx, vy)
+		return
+	}
+	if vx.Type() != vy.Type() {
+		s.report(false, vx, vy) // Possible for path to be empty
+		return
+	}
+	t := vx.Type()
+	if len(s.curPath) == 0 {
+		s.curPath.push(&pathStep{typ: t})
+		defer s.curPath.pop()
+	}
+	vx, vy = s.tryExporting(vx, vy)
+
+	// Rule 1: Check whether an option applies on this node in the value tree.
+	if s.tryOptions(vx, vy, t) {
+=======
 func (s *state) statelessCompare(step PathStep) diff.Result {
 	// We do not save and restore curPath and curPtrs because all of the
 	// compareX methods should properly push and pop from them.
@@ -256,10 +404,80 @@ func (s *state) compareAny(step PathStep) {
 
 	// Rule 1: Check whether an option applies on this node in the value tree.
 	if s.tryOptions(t, vx, vy) {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		return
 	}
 
 	// Rule 2: Check whether the type has a valid Equal method.
+<<<<<<< HEAD
+	if s.tryMethod(vx, vy, t) {
+		return
+	}
+
+	// Rule 3: Recursively descend into each value's underlying kind.
+	switch t.Kind() {
+	case reflect.Bool:
+		s.report(vx.Bool() == vy.Bool(), vx, vy)
+		return
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		s.report(vx.Int() == vy.Int(), vx, vy)
+		return
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+		s.report(vx.Uint() == vy.Uint(), vx, vy)
+		return
+	case reflect.Float32, reflect.Float64:
+		s.report(vx.Float() == vy.Float(), vx, vy)
+		return
+	case reflect.Complex64, reflect.Complex128:
+		s.report(vx.Complex() == vy.Complex(), vx, vy)
+		return
+	case reflect.String:
+		s.report(vx.String() == vy.String(), vx, vy)
+		return
+	case reflect.Chan, reflect.UnsafePointer:
+		s.report(vx.Pointer() == vy.Pointer(), vx, vy)
+		return
+	case reflect.Func:
+		s.report(vx.IsNil() && vy.IsNil(), vx, vy)
+		return
+	case reflect.Ptr:
+		if vx.IsNil() || vy.IsNil() {
+			s.report(vx.IsNil() && vy.IsNil(), vx, vy)
+			return
+		}
+		s.curPath.push(&indirect{pathStep{t.Elem()}})
+		defer s.curPath.pop()
+		s.compareAny(vx.Elem(), vy.Elem())
+		return
+	case reflect.Interface:
+		if vx.IsNil() || vy.IsNil() {
+			s.report(vx.IsNil() && vy.IsNil(), vx, vy)
+			return
+		}
+		if vx.Elem().Type() != vy.Elem().Type() {
+			s.report(false, vx.Elem(), vy.Elem())
+			return
+		}
+		s.curPath.push(&typeAssertion{pathStep{vx.Elem().Type()}})
+		defer s.curPath.pop()
+		s.compareAny(vx.Elem(), vy.Elem())
+		return
+	case reflect.Slice:
+		if vx.IsNil() || vy.IsNil() {
+			s.report(vx.IsNil() && vy.IsNil(), vx, vy)
+			return
+		}
+		fallthrough
+	case reflect.Array:
+		s.compareArray(vx, vy, t)
+		return
+	case reflect.Map:
+		s.compareMap(vx, vy, t)
+		return
+	case reflect.Struct:
+		s.compareStruct(vx, vy, t)
+		return
+=======
 	if s.tryMethod(t, vx, vy) {
 		return
 	}
@@ -292,21 +510,57 @@ func (s *state) compareAny(step PathStep) {
 		s.comparePtr(t, vx, vy)
 	case reflect.Interface:
 		s.compareInterface(t, vx, vy)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	default:
 		panic(fmt.Sprintf("%v kind not handled", t.Kind()))
 	}
 }
 
+<<<<<<< HEAD
+func (s *state) tryExporting(vx, vy reflect.Value) (reflect.Value, reflect.Value) {
+	if sf, ok := s.curPath[len(s.curPath)-1].(*structField); ok && sf.unexported {
+		if sf.force {
+			// Use unsafe pointer arithmetic to get read-write access to an
+			// unexported field in the struct.
+			vx = unsafeRetrieveField(sf.pvx, sf.field)
+			vy = unsafeRetrieveField(sf.pvy, sf.field)
+		} else {
+			// We are not allowed to export the value, so invalidate them
+			// so that tryOptions can panic later if not explicitly ignored.
+			vx = nothing
+			vy = nothing
+		}
+	}
+	return vx, vy
+}
+
+func (s *state) tryOptions(vx, vy reflect.Value, t reflect.Type) bool {
+	// If there were no FilterValues, we will not detect invalid inputs,
+	// so manually check for them and append invalid if necessary.
+	// We still evaluate the options since an ignore can override invalid.
+	opts := s.opts
+	if !vx.IsValid() || !vy.IsValid() {
+		opts = Options{opts, invalid{}}
+	}
+
+	// Evaluate all filters and apply the remaining options.
+	if opt := opts.filter(s, vx, vy, t); opt != nil {
+=======
 func (s *state) tryOptions(t reflect.Type, vx, vy reflect.Value) bool {
 	// Evaluate all filters and apply the remaining options.
 	if opt := s.opts.filter(s, t, vx, vy); opt != nil {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		opt.apply(s, vx, vy)
 		return true
 	}
 	return false
 }
 
+<<<<<<< HEAD
+func (s *state) tryMethod(vx, vy reflect.Value, t reflect.Type) bool {
+=======
 func (s *state) tryMethod(t reflect.Type, vx, vy reflect.Value) bool {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	// Check if this type even has an Equal method.
 	m, ok := t.MethodByName("Equal")
 	if !ok || !function.IsType(m.Type, function.EqualAssignable) {
@@ -314,11 +568,19 @@ func (s *state) tryMethod(t reflect.Type, vx, vy reflect.Value) bool {
 	}
 
 	eq := s.callTTBFunc(m.Func, vx, vy)
+<<<<<<< HEAD
+	s.report(eq, vx, vy)
+	return true
+}
+
+func (s *state) callTRFunc(f, v reflect.Value) reflect.Value {
+=======
 	s.report(eq, reportByMethod)
 	return true
 }
 
 func (s *state) callTRFunc(f, v reflect.Value, step Transform) reflect.Value {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	v = sanitizeValue(v, f.Type().In(0))
 	if !s.dynChecker.Next() {
 		return f.Call([]reflect.Value{v})[0]
@@ -329,6 +591,17 @@ func (s *state) callTRFunc(f, v reflect.Value, step Transform) reflect.Value {
 	// unsafe mutations to the input.
 	c := make(chan reflect.Value)
 	go detectRaces(c, f, v)
+<<<<<<< HEAD
+	want := f.Call([]reflect.Value{v})[0]
+	if got := <-c; !s.statelessCompare(got, want).Equal() {
+		// To avoid false-positives with non-reflexive equality operations,
+		// we sanity check whether a value is equal to itself.
+		if !s.statelessCompare(want, want).Equal() {
+			return want
+		}
+		fn := getFuncName(f.Pointer())
+		panic(fmt.Sprintf("non-deterministic function detected: %s", fn))
+=======
 	got := <-c
 	want := f.Call([]reflect.Value{v})[0]
 	if step.vx, step.vy = got, want; !s.statelessCompare(step).Equal() {
@@ -338,6 +611,7 @@ func (s *state) callTRFunc(f, v reflect.Value, step Transform) reflect.Value {
 			return want
 		}
 		panic(fmt.Sprintf("non-deterministic function detected: %s", function.NameOf(f)))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	}
 	return want
 }
@@ -355,10 +629,17 @@ func (s *state) callTTBFunc(f, x, y reflect.Value) bool {
 	// unsafe mutations to the input.
 	c := make(chan reflect.Value)
 	go detectRaces(c, f, y, x)
+<<<<<<< HEAD
+	want := f.Call([]reflect.Value{x, y})[0].Bool()
+	if got := <-c; !got.IsValid() || got.Bool() != want {
+		fn := getFuncName(f.Pointer())
+		panic(fmt.Sprintf("non-deterministic or non-symmetric function detected: %s", fn))
+=======
 	got := <-c
 	want := f.Call([]reflect.Value{x, y})[0].Bool()
 	if !got.IsValid() || got.Bool() != want {
 		panic(fmt.Sprintf("non-deterministic or non-symmetric function detected: %s", function.NameOf(f)))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	}
 	return want
 }
@@ -376,15 +657,68 @@ func detectRaces(c chan<- reflect.Value, f reflect.Value, vs ...reflect.Value) {
 // assuming that T is assignable to R.
 // Otherwise, it returns the input value as is.
 func sanitizeValue(v reflect.Value, t reflect.Type) reflect.Value {
+<<<<<<< HEAD
+	// TODO(dsnet): Remove this hacky workaround.
+	// See https://golang.org/issue/22143
+	if v.Kind() == reflect.Interface && v.IsNil() && v.Type() != t {
+		return reflect.New(t).Elem()
+=======
 	// TODO(≥go1.10): Workaround for reflect bug (https://golang.org/issue/22143).
 	if !flags.AtLeastGo110 {
 		if v.Kind() == reflect.Interface && v.IsNil() && v.Type() != t {
 			return reflect.New(t).Elem()
 		}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	}
 	return v
 }
 
+<<<<<<< HEAD
+func (s *state) compareArray(vx, vy reflect.Value, t reflect.Type) {
+	step := &sliceIndex{pathStep{t.Elem()}, 0, 0}
+	s.curPath.push(step)
+
+	// Compute an edit-script for slices vx and vy.
+	es := diff.Difference(vx.Len(), vy.Len(), func(ix, iy int) diff.Result {
+		step.xkey, step.ykey = ix, iy
+		return s.statelessCompare(vx.Index(ix), vy.Index(iy))
+	})
+
+	// Report the entire slice as is if the arrays are of primitive kind,
+	// and the arrays are different enough.
+	isPrimitive := false
+	switch t.Elem().Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
+		reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr,
+		reflect.Bool, reflect.Float32, reflect.Float64, reflect.Complex64, reflect.Complex128:
+		isPrimitive = true
+	}
+	if isPrimitive && es.Dist() > (vx.Len()+vy.Len())/4 {
+		s.curPath.pop() // Pop first since we are reporting the whole slice
+		s.report(false, vx, vy)
+		return
+	}
+
+	// Replay the edit-script.
+	var ix, iy int
+	for _, e := range es {
+		switch e {
+		case diff.UniqueX:
+			step.xkey, step.ykey = ix, -1
+			s.report(false, vx.Index(ix), nothing)
+			ix++
+		case diff.UniqueY:
+			step.xkey, step.ykey = -1, iy
+			s.report(false, nothing, vy.Index(iy))
+			iy++
+		default:
+			step.xkey, step.ykey = ix, iy
+			if e == diff.Identity {
+				s.report(true, vx.Index(ix), vy.Index(iy))
+			} else {
+				s.compareAny(vx.Index(ix), vy.Index(iy))
+			}
+=======
 func (s *state) compareStruct(t reflect.Type, vx, vy reflect.Value) {
 	var addr bool
 	var vax, vay reflect.Value // Addressable versions of vx and vy
@@ -514,10 +848,91 @@ func (s *state) compareSlice(t reflect.Type, vx, vy reflect.Value) {
 			iy++
 		default:
 			s.compareAny(withIndexes(ix, iy))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			ix++
 			iy++
 		}
 	}
+<<<<<<< HEAD
+	s.curPath.pop()
+	return
+}
+
+func (s *state) compareMap(vx, vy reflect.Value, t reflect.Type) {
+	if vx.IsNil() || vy.IsNil() {
+		s.report(vx.IsNil() && vy.IsNil(), vx, vy)
+		return
+	}
+
+	// We combine and sort the two map keys so that we can perform the
+	// comparisons in a deterministic order.
+	step := &mapIndex{pathStep: pathStep{t.Elem()}}
+	s.curPath.push(step)
+	defer s.curPath.pop()
+	for _, k := range value.SortKeys(append(vx.MapKeys(), vy.MapKeys()...)) {
+		step.key = k
+		vvx := vx.MapIndex(k)
+		vvy := vy.MapIndex(k)
+		switch {
+		case vvx.IsValid() && vvy.IsValid():
+			s.compareAny(vvx, vvy)
+		case vvx.IsValid() && !vvy.IsValid():
+			s.report(false, vvx, nothing)
+		case !vvx.IsValid() && vvy.IsValid():
+			s.report(false, nothing, vvy)
+		default:
+			// It is possible for both vvx and vvy to be invalid if the
+			// key contained a NaN value in it. There is no way in
+			// reflection to be able to retrieve these values.
+			// See https://golang.org/issue/11104
+			panic(fmt.Sprintf("%#v has map key with NaNs", s.curPath))
+		}
+	}
+}
+
+func (s *state) compareStruct(vx, vy reflect.Value, t reflect.Type) {
+	var vax, vay reflect.Value // Addressable versions of vx and vy
+
+	step := &structField{}
+	s.curPath.push(step)
+	defer s.curPath.pop()
+	for i := 0; i < t.NumField(); i++ {
+		vvx := vx.Field(i)
+		vvy := vy.Field(i)
+		step.typ = t.Field(i).Type
+		step.name = t.Field(i).Name
+		step.idx = i
+		step.unexported = !isExported(step.name)
+		if step.unexported {
+			// Defer checking of unexported fields until later to give an
+			// Ignore a chance to ignore the field.
+			if !vax.IsValid() || !vay.IsValid() {
+				// For unsafeRetrieveField to work, the parent struct must
+				// be addressable. Create a new copy of the values if
+				// necessary to make them addressable.
+				vax = makeAddressable(vx)
+				vay = makeAddressable(vy)
+			}
+			step.force = s.exporters[t]
+			step.pvx = vax
+			step.pvy = vay
+			step.field = t.Field(i)
+		}
+		s.compareAny(vvx, vvy)
+	}
+}
+
+// report records the result of a single comparison.
+// It also calls Report if any reporter is registered.
+func (s *state) report(eq bool, vx, vy reflect.Value) {
+	if eq {
+		s.result.NSame++
+	} else {
+		s.result.NDiff++
+	}
+	if s.reporter != nil {
+		s.reporter.Report(vx, vy, eq, s.curPath)
+=======
 }
 
 func (s *state) compareMap(t reflect.Type, vx, vy reflect.Value) {
@@ -643,6 +1058,7 @@ func (rc *recChecker) Check(p Path) {
 		const help = "consider using cmpopts.AcyclicTransformer"
 		set := strings.Join(ss, "\n\t")
 		panic(fmt.Sprintf("%s:\n\t%s\n%s", warning, set, help))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	}
 }
 

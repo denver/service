@@ -241,6 +241,8 @@ bytes by the PostgreSQL server.
 You can find a complete, working example of Listener usage at
 https://godoc.org/github.com/lib/pq/example/listen.
 
+<<<<<<< HEAD
+=======
 
 Kerberos Support
 
@@ -264,5 +266,6 @@ When imported, additional connection string parameters are supported:
 	  to form the full SPN: `krbsrvname/host`.
 	* krbspn - GSS (Kerberos) SPN. This takes priority over
 	  `krbsrvname` if present.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 */
 package pq

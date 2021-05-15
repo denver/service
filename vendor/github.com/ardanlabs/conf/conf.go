@@ -30,6 +30,9 @@ type Sourcer interface {
 
 	// Source takes the field key and attempts to locate that key in its
 	// configuration data. Returns true if found with the value.
+<<<<<<< HEAD
+	Source(fld field) (string, bool)
+=======
 	Source(fld Field) (string, bool)
 }
 
@@ -62,6 +65,7 @@ func VersionString(namespace string, v interface{}) (string, error) {
 		}
 	}
 	return str.String(), nil
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 }
 
 // Parse parses configuration into the provided struct.
@@ -91,31 +95,62 @@ func Parse(args []string, namespace string, cfgStruct interface{}, sources ...So
 
 		// If the field is supposed to hold the leftover args then copy them in
 		// from the flags source.
+<<<<<<< HEAD
+		if field.field.Type() == argsT {
+			args := reflect.ValueOf(Args(flag.args))
+			field.field.Set(args)
+=======
 		if field.Field.Type() == argsT {
 			args := reflect.ValueOf(Args(flag.args))
 			field.Field.Set(args)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			continue
 		}
 
 		// Set any default value into the struct for this field.
+<<<<<<< HEAD
+		if field.options.defaultVal != "" {
+			if err := processField(field.options.defaultVal, field.field); err != nil {
+				return &FieldError{
+					fieldName: field.name,
+					typeName:  field.field.Type().String(),
+					value:     field.options.defaultVal,
+=======
 		if field.Options.DefaultVal != "" {
 			if err := processField(field.Options.DefaultVal, field.Field); err != nil {
 				return &FieldError{
 					fieldName: field.Name,
 					typeName:  field.Field.Type().String(),
 					value:     field.Options.DefaultVal,
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 					err:       err,
 				}
 			}
 		}
 
 		// Process each field against all sources.
+<<<<<<< HEAD
+		var provided bool
+=======
 		var everProvided bool
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		for _, sourcer := range sources {
 			if sourcer == nil {
 				continue
 			}
 
+<<<<<<< HEAD
+			var value string
+			if value, provided = sourcer.Source(field); !provided {
+				continue
+			}
+
+			// A value was found so update the struct value with it.
+			if err := processField(value, field.field); err != nil {
+				return &FieldError{
+					fieldName: field.name,
+					typeName:  field.field.Type().String(),
+=======
 			value, provided := sourcer.Source(field)
 			if !provided {
 				continue
@@ -127,6 +162,7 @@ func Parse(args []string, namespace string, cfgStruct interface{}, sources ...So
 				return &FieldError{
 					fieldName: field.Name,
 					typeName:  field.Field.Type().String(),
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 					value:     value,
 					err:       err,
 				}
@@ -135,8 +171,13 @@ func Parse(args []string, namespace string, cfgStruct interface{}, sources ...So
 
 		// If this key is not provided by any source, check if it was
 		// required to be provided.
+<<<<<<< HEAD
+		if !provided && field.options.required {
+			return fmt.Errorf("required field %s is missing value", field.name)
+=======
 		if !everProvided && field.Options.Required {
 			return fmt.Errorf("required field %s is missing value", field.Name)
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		}
 	}
 
@@ -163,23 +204,19 @@ func String(v interface{}) (string, error) {
 
 	var s strings.Builder
 	for i, fld := range fields {
-		if fld.Options.Noprint {
-			continue
-		}
-
-		s.WriteString(flagUsage(fld))
-		s.WriteString("=")
-		v := fmt.Sprintf("%v", fld.Field.Interface())
-
-		switch {
-		case fld.Options.Mask:
-			if u, err := url.Parse(v); err == nil {
-				userPass := u.User.String()
-				if userPass != "" {
-					v = strings.Replace(v, userPass, "xxxxxx:xxxxxx", 1)
-					s.WriteString(v)
-					break
-				}
+<<<<<<< HEAD
+		if !fld.options.noprint {
+			s.WriteString(flagUsage(fld))
+			s.WriteString("=")
+			s.WriteString(fmt.Sprintf("%v", fld.field.Interface()))
+=======
+		if !fld.Options.Noprint {
+			s.WriteString(flagUsage(fld))
+			s.WriteString("=")
+			s.WriteString(fmt.Sprintf("%v", fld.Field.Interface()))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
+			if i < len(fields)-1 {
+				s.WriteString("\n")
 			}
 			s.WriteString("xxxxxx")
 

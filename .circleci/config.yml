@@ -1,3 +1,28 @@
+<<<<<<< HEAD
+ version: 2
+ jobs:
+   build:
+     machine:
+       image: ubuntu-1604:201903-01
+     steps:
+       - checkout
+       - run:
+           name: Install Go 1.12.7
+           command: |
+               sudo rm -rf /usr/local/go
+               wget -O go.tgz https://golang.org/dl/go1.12.7.linux-amd64.tar.gz
+               sudo tar -C /usr/local -xzf go.tgz
+               rm go.tgz
+               which go
+               go version
+       - run:
+           name: Download the DB image used in tests
+           command: docker pull postgres:11.1-alpine
+       - run:
+           name: Run tests
+           command: 
+               GO111MODULE=on go test -mod=vendor -v ./...
+=======
 version: 2
 jobs:
   build:
@@ -32,3 +57,4 @@ jobs:
           name: Run tests
           command: |
               go test ./...
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

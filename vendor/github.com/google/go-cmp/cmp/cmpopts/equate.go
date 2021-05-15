@@ -1,6 +1,10 @@
 // Copyright 2017, The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
+<<<<<<< HEAD
+// license that can be found in the LICENSE.md file.
+=======
 // license that can be found in the LICENSE file.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 // Package cmpopts provides common options for the cmp package.
 package cmpopts
@@ -8,9 +12,15 @@ package cmpopts
 import (
 	"math"
 	"reflect"
+<<<<<<< HEAD
+
+	"github.com/google/go-cmp/cmp"
+=======
 	"time"
 
 	"github.com/google/go-cmp/cmp"
+	"golang.org/x/xerrors"
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 )
 
 func equateAlways(_, _ interface{}) bool { return true }
@@ -88,6 +98,8 @@ func areNaNsF64s(x, y float64) bool {
 func areNaNsF32s(x, y float32) bool {
 	return areNaNsF64s(float64(x), float64(y))
 }
+<<<<<<< HEAD
+=======
 
 // EquateApproxTime returns a Comparer option that determines two non-zero
 // time.Time values to be equal if they are within some margin of one another.
@@ -146,3 +158,11 @@ func areConcreteErrors(x, y interface{}) bool {
 	_, ok2 := y.(error)
 	return ok1 && ok2
 }
+
+func compareErrors(x, y interface{}) bool {
+	xe := x.(error)
+	ye := y.(error)
+	// TODO(≥go1.13): Use standard definition of errors.Is.
+	return xerrors.Is(xe, ye) || xerrors.Is(ye, xe)
+}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

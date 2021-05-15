@@ -70,4 +70,20 @@ postgresql_uninstall() {
 	sudo rm -rf /var/lib/postgresql
 }
 
+<<<<<<< HEAD
+megacheck_install() {
+	# Lock megacheck version at $MEGACHECK_VERSION to prevent spontaneous
+	# new error messages in old code.
+	go get -d honnef.co/go/tools/...
+	git -C $GOPATH/src/honnef.co/go/tools/ checkout $MEGACHECK_VERSION
+	go install honnef.co/go/tools/cmd/megacheck
+	megacheck --version
+}
+
+golint_install() {
+	go get golang.org/x/lint/golint
+}
+
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 $1

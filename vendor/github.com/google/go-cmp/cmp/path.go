@@ -1,6 +1,10 @@
 // Copyright 2017, The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
+<<<<<<< HEAD
+// license that can be found in the LICENSE.md file.
+=======
 // license that can be found in the LICENSE file.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 package cmp
 
@@ -10,6 +14,84 @@ import (
 	"strings"
 	"unicode"
 	"unicode/utf8"
+<<<<<<< HEAD
+)
+
+type (
+	// Path is a list of PathSteps describing the sequence of operations to get
+	// from some root type to the current position in the value tree.
+	// The first Path element is always an operation-less PathStep that exists
+	// simply to identify the initial type.
+	//
+	// When traversing structs with embedded structs, the embedded struct will
+	// always be accessed as a field before traversing the fields of the
+	// embedded struct themselves. That is, an exported field from the
+	// embedded struct will never be accessed directly from the parent struct.
+	Path []PathStep
+
+	// PathStep is a union-type for specific operations to traverse
+	// a value's tree structure. Users of this package never need to implement
+	// these types as values of this type will be returned by this package.
+	PathStep interface {
+		String() string
+		Type() reflect.Type // Resulting type after performing the path step
+		isPathStep()
+	}
+
+	// SliceIndex is an index operation on a slice or array at some index Key.
+	SliceIndex interface {
+		PathStep
+		Key() int // May return -1 if in a split state
+
+		// SplitKeys returns the indexes for indexing into slices in the
+		// x and y values, respectively. These indexes may differ due to the
+		// insertion or removal of an element in one of the slices, causing
+		// all of the indexes to be shifted. If an index is -1, then that
+		// indicates that the element does not exist in the associated slice.
+		//
+		// Key is guaranteed to return -1 if and only if the indexes returned
+		// by SplitKeys are not the same. SplitKeys will never return -1 for
+		// both indexes.
+		SplitKeys() (x int, y int)
+
+		isSliceIndex()
+	}
+	// MapIndex is an index operation on a map at some index Key.
+	MapIndex interface {
+		PathStep
+		Key() reflect.Value
+		isMapIndex()
+	}
+	// TypeAssertion represents a type assertion on an interface.
+	TypeAssertion interface {
+		PathStep
+		isTypeAssertion()
+	}
+	// StructField represents a struct field access on a field called Name.
+	StructField interface {
+		PathStep
+		Name() string
+		Index() int
+		isStructField()
+	}
+	// Indirect represents pointer indirection on the parent type.
+	Indirect interface {
+		PathStep
+		isIndirect()
+	}
+	// Transform is a transformation from the parent type to the current type.
+	Transform interface {
+		PathStep
+		Name() string
+		Func() reflect.Value
+
+		// Option returns the originally constructed Transformer option.
+		// The == operator can be used to detect the exact option used.
+		Option() Option
+
+		isTransform()
+	}
+=======
 
 	"github.com/google/go-cmp/cmp/internal/value"
 )
@@ -60,6 +142,7 @@ var (
 	_ PathStep = Indirect{}
 	_ PathStep = TypeAssertion{}
 	_ PathStep = Transform{}
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 )
 
 func (pa *Path) push(s PathStep) {
@@ -98,7 +181,11 @@ func (pa Path) Index(i int) PathStep {
 func (pa Path) String() string {
 	var ss []string
 	for _, s := range pa {
+<<<<<<< HEAD
+		if _, ok := s.(*structField); ok {
+=======
 		if _, ok := s.(StructField); ok {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 			ss = append(ss, s.String())
 		}
 	}
@@ -118,6 +205,15 @@ func (pa Path) GoString() string {
 			nextStep = pa[i+1]
 		}
 		switch s := s.(type) {
+<<<<<<< HEAD
+		case *indirect:
+			numIndirect++
+			pPre, pPost := "(", ")"
+			switch nextStep.(type) {
+			case *indirect:
+				continue // Next step is indirection, so let them batch up
+			case *structField:
+=======
 		case Indirect:
 			numIndirect++
 			pPre, pPost := "(", ")"
@@ -125,6 +221,7 @@ func (pa Path) GoString() string {
 			case Indirect:
 				continue // Next step is indirection, so let them batch up
 			case StructField:
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 				numIndirect-- // Automatic indirection on struct fields
 			case nil:
 				pPre, pPost = "", "" // Last step; no need for parenthesis
@@ -135,10 +232,26 @@ func (pa Path) GoString() string {
 			}
 			numIndirect = 0
 			continue
+<<<<<<< HEAD
+		case *transform:
+			ssPre = append(ssPre, s.trans.name+"(")
+			ssPost = append(ssPost, ")")
+			continue
+		case *typeAssertion:
+			// As a special-case, elide type assertions on anonymous types
+			// since they are typically generated dynamically and can be very
+			// verbose. For example, some transforms return interface{} because
+			// of Go's lack of generics, but typically take in and return the
+			// exact same concrete type.
+			if s.Type().PkgPath() == "" {
+				continue
+			}
+=======
 		case Transform:
 			ssPre = append(ssPre, s.trans.name+"(")
 			ssPost = append(ssPost, ")")
 			continue
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		}
 		ssPost = append(ssPost, s.String())
 	}
@@ -148,6 +261,46 @@ func (pa Path) GoString() string {
 	return strings.Join(ssPre, "") + strings.Join(ssPost, "")
 }
 
+<<<<<<< HEAD
+type (
+	pathStep struct {
+		typ reflect.Type
+	}
+
+	sliceIndex struct {
+		pathStep
+		xkey, ykey int
+	}
+	mapIndex struct {
+		pathStep
+		key reflect.Value
+	}
+	typeAssertion struct {
+		pathStep
+	}
+	structField struct {
+		pathStep
+		name string
+		idx  int
+
+		// These fields are used for forcibly accessing an unexported field.
+		// pvx, pvy, and field are only valid if unexported is true.
+		unexported bool
+		force      bool                // Forcibly allow visibility
+		pvx, pvy   reflect.Value       // Parent values
+		field      reflect.StructField // Field information
+	}
+	indirect struct {
+		pathStep
+	}
+	transform struct {
+		pathStep
+		trans *transformer
+	}
+)
+
+func (ps pathStep) Type() reflect.Type { return ps.typ }
+=======
 type pathStep struct {
 	typ    reflect.Type
 	vx, vy reflect.Value
@@ -155,6 +308,7 @@ type pathStep struct {
 
 func (ps pathStep) Type() reflect.Type             { return ps.typ }
 func (ps pathStep) Values() (vx, vy reflect.Value) { return ps.vx, ps.vy }
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func (ps pathStep) String() string {
 	if ps.typ == nil {
 		return "<nil>"
@@ -166,6 +320,9 @@ func (ps pathStep) String() string {
 	return fmt.Sprintf("{%s}", s)
 }
 
+<<<<<<< HEAD
+func (si sliceIndex) String() string {
+=======
 // StructField represents a struct field access on a field called Name.
 type StructField struct{ *structField }
 type structField struct {
@@ -216,6 +373,7 @@ type sliceIndex struct {
 func (si SliceIndex) Type() reflect.Type             { return si.typ }
 func (si SliceIndex) Values() (vx, vy reflect.Value) { return si.vx, si.vy }
 func (si SliceIndex) String() string {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	switch {
 	case si.xkey == si.ykey:
 		return fmt.Sprintf("[%d]", si.xkey)
@@ -230,14 +388,57 @@ func (si SliceIndex) String() string {
 		return fmt.Sprintf("[%d->%d]", si.xkey, si.ykey)
 	}
 }
+<<<<<<< HEAD
+func (mi mapIndex) String() string      { return fmt.Sprintf("[%#v]", mi.key) }
+func (ta typeAssertion) String() string { return fmt.Sprintf(".(%v)", ta.typ) }
+func (sf structField) String() string   { return fmt.Sprintf(".%s", sf.name) }
+func (in indirect) String() string      { return "*" }
+func (tf transform) String() string     { return fmt.Sprintf("%s()", tf.trans.name) }
+
+func (si sliceIndex) Key() int {
+=======
 
 // Key is the index key; it may return -1 if in a split state
 func (si SliceIndex) Key() int {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	if si.xkey != si.ykey {
 		return -1
 	}
 	return si.xkey
 }
+<<<<<<< HEAD
+func (si sliceIndex) SplitKeys() (x, y int) { return si.xkey, si.ykey }
+func (mi mapIndex) Key() reflect.Value      { return mi.key }
+func (sf structField) Name() string         { return sf.name }
+func (sf structField) Index() int           { return sf.idx }
+func (tf transform) Name() string           { return tf.trans.name }
+func (tf transform) Func() reflect.Value    { return tf.trans.fnc }
+func (tf transform) Option() Option         { return tf.trans }
+
+func (pathStep) isPathStep()           {}
+func (sliceIndex) isSliceIndex()       {}
+func (mapIndex) isMapIndex()           {}
+func (typeAssertion) isTypeAssertion() {}
+func (structField) isStructField()     {}
+func (indirect) isIndirect()           {}
+func (transform) isTransform()         {}
+
+var (
+	_ SliceIndex    = sliceIndex{}
+	_ MapIndex      = mapIndex{}
+	_ TypeAssertion = typeAssertion{}
+	_ StructField   = structField{}
+	_ Indirect      = indirect{}
+	_ Transform     = transform{}
+
+	_ PathStep = sliceIndex{}
+	_ PathStep = mapIndex{}
+	_ PathStep = typeAssertion{}
+	_ PathStep = structField{}
+	_ PathStep = indirect{}
+	_ PathStep = transform{}
+)
+=======
 
 // SplitKeys are the indexes for indexing into slices in the
 // x and y values, respectively. These indexes may differ due to the
@@ -370,9 +571,24 @@ func (p pointerPath) Pop(vx, vy reflect.Value) {
 	delete(p.mx, value.PointerOf(vx))
 	delete(p.my, value.PointerOf(vy))
 }
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 // isExported reports whether the identifier is exported.
 func isExported(id string) bool {
 	r, _ := utf8.DecodeRuneInString(id)
 	return unicode.IsUpper(r)
 }
+<<<<<<< HEAD
+
+// isValid reports whether the identifier is valid.
+// Empty and underscore-only strings are not valid.
+func isValid(id string) bool {
+	ok := id != "" && id != "_"
+	for j, c := range id {
+		ok = ok && (j > 0 || !unicode.IsDigit(c))
+		ok = ok && (c == '_' || unicode.IsLetter(c) || unicode.IsDigit(c))
+	}
+	return ok
+}
+=======
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92

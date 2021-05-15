@@ -1,6 +1,10 @@
 // Copyright 2017, The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
+<<<<<<< HEAD
+// license that can be found in the LICENSE.md file.
+=======
 // license that can be found in the LICENSE file.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 
 package cmpopts
 
@@ -42,7 +46,11 @@ func newStructFilter(typ interface{}, names ...string) structFilter {
 
 	t := reflect.TypeOf(typ)
 	if t == nil || t.Kind() != reflect.Struct {
+<<<<<<< HEAD
+		panic(fmt.Sprintf("%T must be a struct", typ))
+=======
 		panic(fmt.Sprintf("%T must be a non-pointer struct", typ))
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 	}
 	var ft fieldTree
 	for _, name := range names {
@@ -160,6 +168,16 @@ func canonicalName(t reflect.Type, sel string) ([]string, error) {
 
 	// Find the canonical name for this current field name.
 	// If the field exists in an embedded struct, then it will be expanded.
+<<<<<<< HEAD
+	if !isExported(name) {
+		// Disallow unexported fields:
+		//	* To discourage people from actually touching unexported fields
+		//	* FieldByName is buggy (https://golang.org/issue/4876)
+		return []string{name}, fmt.Errorf("name must be exported")
+	}
+	sf, ok := t.FieldByName(name)
+	if !ok {
+=======
 	sf, _ := t.FieldByName(name)
 	if !isExported(name) {
 		// Avoid using reflect.Type.FieldByName for unexported fields due to
@@ -173,6 +191,7 @@ func canonicalName(t reflect.Type, sel string) ([]string, error) {
 		}
 	}
 	if sf.Name == "" {
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 		return []string{name}, fmt.Errorf("does not exist")
 	}
 	var ss []string

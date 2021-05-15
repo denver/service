@@ -22,7 +22,11 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+<<<<<<< HEAD
+// Pacakage scram implements a SCRAM-{SHA-1,etc} client per RFC5802.
+=======
 // Package scram implements a SCRAM-{SHA-1,etc} client per RFC5802.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 //
 // http://tools.ietf.org/html/rfc5802
 //
@@ -94,7 +98,11 @@ func (c *Client) Out() []byte {
 	return c.out.Bytes()
 }
 
+<<<<<<< HEAD
+// Err returns the error that ocurred, or nil if there were no errors.
+=======
 // Err returns the error that occurred, or nil if there were no errors.
+>>>>>>> 24002bb5690504cdbff6843ce8d8183c3da26d92
 func (c *Client) Err() error {
 	return c.err
 }
